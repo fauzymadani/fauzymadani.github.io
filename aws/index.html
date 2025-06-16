@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  
+  <meta name="description" content="FOSS • Linux • Programming" />
+  
+  
+
+  <title>
+    
+    AWS and Linux
+    
+</title>
+
+  
+  
+
+  
+  <link rel="stylesheet" href="https://fauzymadani.github.io/site.css">
+  
+
+  
+  
+</head>
+
+<body class="hack dark main container">
+  
+    
+        
+  
+  <header class="nav-header">
+    <nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="navbar">
+      <div class="nav-links">
+        
+        <a itemprop="url"
+          class=""
+          href="https://fauzymadani.github.io">
+          <span itemprop="name">Home</span></a>
+        
+        <a itemprop="url"
+          class=""
+          href="https://fauzymadani.github.io/categories">
+          <span itemprop="name">Categories</span></a>
+        
+        <a itemprop="url"
+          class=""
+          href="https://github.com/fauzymadani/personalBlog">
+          <span itemprop="name">Source</span></a>
+        
+        <a itemprop="url"
+          class=""
+          href="https://github.com/fauzymadani">
+          <span itemprop="name">GitHub</span></a>
+        
+      </div>
+    </nav>
+    
+
+  </header>
+  
+  
+    
+
+<article itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+        <h1 itemprop="headline">AWS and Linux</h1>
+        <span class="muted">
+    <svg class="icon i-clock" viewBox="0 0 32 32"
+         width="16" height="16" fill="none" stroke="currentcolor"
+         stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+        <circle cx="16" cy="16" r="14"/>
+        <path d="M16 8 L16 16 20 20"/>
+    </svg>
+    <span>3 minute read</span>
+    <svg class="icon i-edit" viewBox="0 0 32 32"
+         width="16" height="16" fill="none" stroke="currentcolor"
+         stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+        <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z"/>
+    </svg>
+
+    Published: 2025-06-16
+</span>
+    </header>
+    <div itemprop="articleBody">
+      <p>This blog post explores how Linux and AWS work together, with real-world insights and tips on using them effectively.</p>
+<span id="continue-reading"></span><h1 id="exploring-linux-and-aws-a-practical-approach-to-modern-infrastructure">Exploring Linux and AWS: A Practical Approach to Modern Infrastructure</h1>
+<h2 id="introduction">Introduction</h2>
+<p>In today’s digital landscape, the combination of <strong>Linux</strong> and <strong>Amazon Web Services (AWS)</strong> forms the backbone of many modern infrastructure stacks. Whether you're a DevOps engineer, software developer, or system administrator, understanding both technologies is essential for building scalable, reliable, and cost-efficient systems.</p>
+<p>This blog post explores how Linux and AWS work together, with real-world insights and tips on using them effectively.</p>
+<hr />
+<h2 id="why-linux">Why Linux?</h2>
+<p>Linux has become the dominant operating system in cloud environments due to its stability, flexibility, and open-source nature. Here are some reasons why professionals prefer Linux:</p>
+<ul>
+<li><strong>Open Source:</strong> Completely free and customizable.</li>
+<li><strong>Security:</strong> Strong user permission system and frequent updates.</li>
+<li><strong>Performance:</strong> Lightweight and efficient for server workloads.</li>
+<li><strong>Ecosystem:</strong> Supported by nearly every programming language and framework.</li>
+</ul>
+<p>Most AWS services, including EC2, Lambda (through Amazon Linux), and ECS, are optimized for Linux environments.</p>
+<hr />
+<h2 id="setting-up-linux-on-aws-ec2">Setting Up Linux on AWS EC2</h2>
+<p>One of the most common use cases is launching a Linux-based EC2 (Elastic Compute Cloud) instance. Here's a simplified workflow:</p>
+<ol>
+<li><strong>Login to AWS Console</strong></li>
+<li>Navigate to <strong>EC2 Dashboard</strong></li>
+<li>Click <strong>Launch Instance</strong></li>
+<li>Select an <strong>Amazon Linux 2 AMI</strong> or <strong>Ubuntu Server LTS</strong></li>
+<li>Choose an instance type (e.g., <code>t3.micro</code> for free-tier)</li>
+<li>Configure instance details, add storage, and set up security groups (port 22 for SSH)</li>
+<li>Launch and connect via SSH:</li>
+</ol>
+<pre data-lang="bash" style="background-color:#191919;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#cccccc;">ssh</span><span style="font-style:italic;color:#8aa6c1;"> -i</span><span style="color:#cccccc;"> your-key.pem ec2-user@your-ec2-public-ip
+</span></code></pre>
+<blockquote>
+<p>Tip: Always restrict SSH access to specific IP ranges in your security group for better security.</p>
+</blockquote>
+<hr />
+<h2 id="essential-linux-commands-for-aws-users">Essential Linux Commands for AWS Users</h2>
+<p>Once logged into a Linux EC2 instance, these commands are crucial:</p>
+<pre data-lang="bash" style="background-color:#191919;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="background-color:#171717;color:#616161;"># Update and upgrade packages
+</span><span style="color:#cccccc;">sudo yum update</span><span style="font-style:italic;color:#8aa6c1;"> -y    </span><span style="background-color:#171717;color:#616161;"># For Amazon Linux
+</span><span style="color:#cccccc;">sudo apt update </span><span>&amp;&amp; </span><span style="color:#cccccc;">sudo apt upgrade</span><span style="font-style:italic;color:#8aa6c1;"> -y  </span><span style="background-color:#171717;color:#616161;"># For Ubuntu
+</span><span style="color:#cccccc;">
+</span><span style="background-color:#171717;color:#616161;"># Check system information
+</span><span style="color:#cccccc;">uname</span><span style="font-style:italic;color:#8aa6c1;"> -a
+</span><span style="color:#cccccc;">top
+</span><span style="color:#cccccc;">df</span><span style="font-style:italic;color:#8aa6c1;"> -h
+</span><span style="color:#cccccc;">
+</span><span style="background-color:#171717;color:#616161;"># Manage services
+</span><span style="color:#cccccc;">sudo systemctl status nginx
+</span><span style="color:#cccccc;">sudo systemctl start docker
+</span></code></pre>
+<p>Understanding these commands allows you to troubleshoot, optimize, and maintain your AWS instances effectively.</p>
+<hr />
+<h2 id="automating-with-shell-scripts">Automating with Shell Scripts</h2>
+<p>Automation is key to infrastructure management. Bash scripts can simplify repetitive tasks:</p>
+<pre data-lang="bash" style="background-color:#191919;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="background-color:#171717;color:#616161;">#!/bin/bash
+</span><span style="background-color:#171717;color:#616161;"># Simple deployment script
+</span><span style="color:#cccccc;">sudo apt update
+</span><span style="color:#cccccc;">sudo apt install</span><span style="font-style:italic;color:#8aa6c1;"> -y</span><span style="color:#cccccc;"> nginx
+</span><span style="color:#cccccc;">sudo systemctl enable nginx
+</span><span style="color:#cccccc;">sudo systemctl start nginx
+</span></code></pre>
+<p>You can run this on multiple EC2 instances using SSH or through AWS Systems Manager (SSM).</p>
+<hr />
+<h2 id="security-best-practices">Security Best Practices</h2>
+<p>Combining Linux and AWS introduces new security considerations:</p>
+<ul>
+<li><strong>Use SSH Keys</strong>, not passwords</li>
+<li><strong>Keep software updated</strong> (<code>yum</code> or <code>apt</code>)</li>
+<li><strong>Enable automatic security patches</strong></li>
+<li><strong>Use IAM roles</strong> instead of hardcoded credentials</li>
+<li><strong>Audit logs using CloudTrail and <code>auth.log</code></strong></li>
+</ul>
+<p>Example: View authentication logs on Linux:</p>
+<pre data-lang="bash" style="background-color:#191919;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#cccccc;">cat /var/log/auth.log </span><span>| </span><span style="color:#cccccc;">grep ssh
+</span></code></pre>
+<hr />
+<h2 id="integrating-with-aws-services">Integrating with AWS Services</h2>
+<p>Linux EC2 instances often interact with other AWS services:</p>
+<ul>
+<li><strong>S3:</strong> Store backups, static assets</li>
+<li><strong>RDS:</strong> Connect to managed databases</li>
+<li><strong>CloudWatch:</strong> Monitor logs and metrics</li>
+<li><strong>Elastic Load Balancer (ELB):</strong> Distribute traffic across Linux instances</li>
+<li><strong>IAM:</strong> Securely grant permissions to access services</li>
+</ul>
+<p>Using the AWS CLI:</p>
+<pre data-lang="bash" style="background-color:#191919;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#cccccc;">aws s3 cp backup.tar.gz s3://mybucket/backups/
+</span></code></pre>
+<p>To use the CLI inside Linux, install it and configure it with:</p>
+<pre data-lang="bash" style="background-color:#191919;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#cccccc;">aws configure
+</span></code></pre>
+<hr />
+<h2 id="conclusion">Conclusion</h2>
+<p>Linux and AWS are a powerful duo for any cloud-based infrastructure. Linux provides the flexibility and control, while AWS offers scalability and global reach. By mastering both, you can deploy resilient systems, automate workflows, and optimize your infrastructure costs.</p>
+<blockquote>
+<p>Stay tuned for more posts exploring containerization, CI/CD pipelines, and infrastructure as code using tools like Docker, GitHub Actions, and Terraform — all within the Linux + AWS ecosystem.</p>
+</blockquote>
+<hr />
+<p><strong>Author:</strong> Fauzy Madani<br />
+<strong>Tags:</strong> Linux, AWS, Cloud, Infrastructure, DevOps</p>
+
+    </div>
+
+    
+        <footer>
+            <hr>
+            <p>
+                
+                    Published by Fauzy Madani
+                
+                
+                    
+                    in <a href="https://fauzymadani.github.io/categories/linux/">Linux</a>
+                
+                
+            </p>
+            
+            
+        </footer>
+    
+</article>
+
+
+
+  <!-- optional scripts -->
+  
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

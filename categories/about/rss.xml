@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>Fauzy&#x27;s Blog - About</title>
+      <link>https://fauzymadani.github.io</link>
+      <description>FOSS • Linux • Programming</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://fauzymadani.github.io/categories/about/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Wed, 04 Dec 2024 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>About Fauzy Madani</title>
+          <pubDate>Wed, 04 Dec 2024 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://fauzymadani.github.io/firstblog/</link>
+          <guid>https://fauzymadani.github.io/firstblog/</guid>
+          <description xml:base="https://fauzymadani.github.io/firstblog/">&lt;p&gt;introduction about who i am, from the different perspective. read this first when you don&#x27;t know me!&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>
