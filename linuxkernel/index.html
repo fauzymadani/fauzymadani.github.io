@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  
+  <meta name="description" content="FOSS • Linux • Programming" />
+  
+  
+
+  <title>
+    
+    Inside the Linux Kernel
+    
+</title>
+
+  
+  
+
+  
+  <link rel="stylesheet" href="https://fauzymadani.github.io/site.css">
+  
+
+  
+  
+</head>
+
+<body class="hack dark main container">
+  
+    
+        
+  
+  <header class="nav-header">
+    <nav itemscope itemtype="http://schema.org/SiteNavigationElement" class="navbar">
+      <div class="nav-links">
+        
+        <a itemprop="url"
+          class=""
+          href="https://fauzymadani.github.io">
+          <span itemprop="name">Home</span></a>
+        
+        <a itemprop="url"
+          class=""
+          href="https://fauzymadani.github.io/categories">
+          <span itemprop="name">Categories</span></a>
+        
+        <a itemprop="url"
+          class=""
+          href="https://github.com/fauzymadani/personalBlog">
+          <span itemprop="name">Source</span></a>
+        
+        <a itemprop="url"
+          class=""
+          href="https://github.com/fauzymadani">
+          <span itemprop="name">GitHub</span></a>
+        
+      </div>
+    </nav>
+    
+
+  </header>
+  
+  
+    
+
+<article itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+        <h1 itemprop="headline">Inside the Linux Kernel</h1>
+        <span class="muted">
+    <svg class="icon i-clock" viewBox="0 0 32 32"
+         width="16" height="16" fill="none" stroke="currentcolor"
+         stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+        <circle cx="16" cy="16" r="14"/>
+        <path d="M16 8 L16 16 20 20"/>
+    </svg>
+    <span>3 minute read</span>
+    <svg class="icon i-edit" viewBox="0 0 32 32"
+         width="16" height="16" fill="none" stroke="currentcolor"
+         stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+        <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z"/>
+    </svg>
+
+    Published: 2025-06-19
+</span>
+    </header>
+    <div itemprop="articleBody">
+      <p>Ever wondered how Linux really works at its core? Explore the internal architecture of the Linux kernel — from its process scheduler and virtual memory to device drivers and system calls. Discover how a modular monolithic design powers billions of devices across platforms, and why this open-source marvel is so crucial in today's tech landscape.</p>
+<span id="continue-reading"></span><h1 id="understanding-the-linux-kernel-architecture">Understanding the Linux Kernel Architecture</h1>
+<h2 id="abstract">Abstract</h2>
+<p>The Linux kernel is the fundamental part of the Linux operating system, acting as a bridge between hardware and user-level applications. Understanding its architecture is essential for systems programmers, performance engineers, and developers who work closely with low-level computing systems. This article explores the Linux kernel’s modular design, its core subsystems, and how it achieves performance, portability, and security.</p>
+<h2 id="introduction">Introduction</h2>
+<p>The Linux kernel was originally created by Linus Torvalds in 1991 as a monolithic kernel for the GNU operating system. Since then, it has evolved into a powerful and widely-used piece of software that powers everything from smartphones to supercomputers. As of version 6.9 (released in May 2024), the Linux kernel consists of over <strong>30 million lines of code</strong> <sup class="footnote-reference"><a href="#1">1</a></sup>.</p>
+<h2 id="kernel-architecture-overview">Kernel Architecture Overview</h2>
+<p>The Linux kernel employs a <strong>monolithic architecture</strong> with modular capabilities. This means that while the kernel is a single binary, it supports the loading and unloading of modules at runtime to extend its functionality.</p>
+<h3 id="key-components">Key Components</h3>
+<ol>
+<li><strong>Process Scheduler</strong>: Handles multitasking by allocating CPU time to different processes.</li>
+<li><strong>Memory Management</strong>: Implements virtual memory, paging, and cache policies.</li>
+<li><strong>Virtual File System (VFS)</strong>: Abstracts file system operations to support multiple file systems (e.g., ext4, Btrfs, XFS).</li>
+<li><strong>Device Drivers</strong>: Interface between hardware and the kernel.</li>
+<li><strong>Networking Stack</strong>: Implements protocols like TCP/IP, UDP, SCTP.</li>
+<li><strong>System Calls Interface</strong>: Provides controlled access to kernel services from user space.</li>
+</ol>
+<h2 id="modular-design">Modular Design</h2>
+<p>The kernel can dynamically load and unload <strong>loadable kernel modules (LKMs)</strong>, which are typically device drivers or file system modules. This allows administrators to extend the kernel without rebooting the system. Use of the <code>insmod</code>, <code>modprobe</code>, and <code>rmmod</code> tools enables this modularity.</p>
+<pre data-lang="bash" style="background-color:#191919;color:#ffffff;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#cccccc;">sudo modprobe e1000e   </span><span style="background-color:#171717;color:#616161;"># Loads Intel e1000e Ethernet driver
+</span><span style="color:#cccccc;">sudo rmmod e1000e      </span><span style="background-color:#171717;color:#616161;"># Unloads the driver
+</span></code></pre>
+<h2 id="performance-considerations">Performance Considerations</h2>
+<p>Linux's scheduling algorithms, such as the <strong>Completely Fair Scheduler (CFS)</strong>, aim to optimize system responsiveness and fairness. Additionally, the <strong>tickless kernel</strong> (CONFIG_NO_HZ) reduces unnecessary CPU wake-ups, benefiting power efficiency on mobile and embedded systems.</p>
+<h3 id="example-scheduling-benchmark">Example: Scheduling Benchmark</h3>
+<p>A 2023 benchmark using the <code>hackbench</code> tool on Linux 6.6 showed a 15% improvement in task scheduling throughput compared to Linux 5.10 on AMD EPYC hardware <sup class="footnote-reference"><a href="#2">2</a></sup>.</p>
+<h2 id="portability-and-platform-support">Portability and Platform Support</h2>
+<p>The Linux kernel supports over <strong>20 hardware architectures</strong>, including x86, ARM, RISC-V, PowerPC, and MIPS. This is achieved through a well-abstracted hardware interaction layer and an extensive device driver ecosystem.</p>
+<h2 id="security-mechanisms">Security Mechanisms</h2>
+<p>Linux incorporates several security frameworks:</p>
+<ul>
+<li><strong>SELinux</strong> and <strong>AppArmor</strong>: Mandatory Access Control (MAC) systems</li>
+<li><strong>Seccomp</strong>: Restricts system calls</li>
+<li><strong>Kernel Address Space Layout Randomization (KASLR)</strong>: Hardens memory against exploits</li>
+</ul>
+<p>Security patches are rapidly deployed through the <strong>Long-Term Support (LTS)</strong> kernel releases, which receive updates for up to 6 years.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The Linux kernel’s architecture balances performance, modularity, and flexibility. It continues to evolve to meet the demands of modern computing, from cloud infrastructure to real-time embedded systems. Deep understanding of its internals can greatly benefit system administrators, developers, and security professionals alike.</p>
+<h2 id="references">References</h2>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>Linux Kernel Source Statistics — <a href="https://github.com/torvalds/linux">https://github.com/torvalds/linux</a></p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>"Linux Kernel 6.6 Performance Benchmarks", Phoronix (2023) — <a href="https://www.phoronix.com/review/linux-66-benchmarks">https://www.phoronix.com/review/linux-66-benchmarks</a></p>
+</div>
+
+    </div>
+
+    
+        <footer>
+            <hr>
+            <p>
+                
+                    Published by Fauzy Madani
+                
+                
+                    
+                    in <a href="https://fauzymadani.github.io/categories/linux/">Linux</a>
+                
+                
+            </p>
+            
+            
+        </footer>
+    
+</article>
+
+
+
+  <!-- optional scripts -->
+  
+  
+
+  
+
+  
+
+  
+</body>
+
+</html>

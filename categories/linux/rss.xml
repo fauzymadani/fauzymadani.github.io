@@ -7,7 +7,16 @@
       <generator>Zola</generator>
       <language>en</language>
       <atom:link href="https://fauzymadani.github.io/categories/linux/rss.xml" rel="self" type="application/rss+xml"/>
-      <lastBuildDate>Mon, 16 Jun 2025 00:00:00 +0000</lastBuildDate>
+      <lastBuildDate>Thu, 19 Jun 2025 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Inside the Linux Kernel</title>
+          <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://fauzymadani.github.io/linuxkernel/</link>
+          <guid>https://fauzymadani.github.io/linuxkernel/</guid>
+          <description xml:base="https://fauzymadani.github.io/linuxkernel/">&lt;p&gt;Ever wondered how Linux really works at its core? Explore the internal architecture of the Linux kernel — from its process scheduler and virtual memory to device drivers and system calls. Discover how a modular monolithic design powers billions of devices across platforms, and why this open-source marvel is so crucial in today&#x27;s tech landscape.&lt;&#x2F;p&gt;
+</description>
+      </item>
       <item>
           <title>AWS and Linux</title>
           <pubDate>Mon, 16 Jun 2025 00:00:00 +0000</pubDate>
