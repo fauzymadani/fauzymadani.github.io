@@ -4,6 +4,15 @@
 
 Welcome to my blog!
 
+#+begin_quote
+"I must not fear. Fear is the mind-killer. Fear is the little-death that brings total obliteration. I will face my fear. I will permit it to pass over me and through me. And when it has gone past I will turn the inner eye to see its path. Where the fear has gone there will be nothing. Only I will remain.
+#+end_quote
+
+This is my second blog page, my first real blog page is using [[https:bearblog.dev][bearblog]] but then i decided to make my own hosted using github pages. i choose this way because i wanted to integrate it with my emacs and write my blog inside emacs using =org-mode=. nothing is wrong with bearblog, everything is great. feel free to visit my [[https:yzuaf.bearblog.dev][previous blog]].
+
+
+My name is Fauzy.i love using free/libre software because it's cool, and i use GNU/Linux for my daily driver specifically using *Arch Linux* btw.
+
 * Recent Posts
 - [[file:hello-world.org][Hello World]]
 
