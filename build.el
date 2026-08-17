@@ -20,7 +20,7 @@
          :html-head-include-default-style nil
          :html-head-include-scripts nil
          :html-head "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>"
-         :html-preamble "<nav class=\"site-nav\"><a href=\"index.html\" class=\"nav-title\">Fauzy</a><a href=\"index.html\">Home</a><a href=\"archive.html\">Archive</a></nav>"
+         :html-preamble "<nav class=\"site-nav\"><a href=\"index.html\" class=\"nav-title\">Fauzy's Blog</a><a href=\"index.html\">Home</a><a href=\"archive.html\">Archive</a></nav>"
          :html-postamble "<div class=\"footer-content\"><p>© %a · Written in Org-mode</p><a href=\"https://notbyai.fyi\" target=\"_blank\" rel=\"noopener\"><img src=\"images/not-by-ai.svg\" alt=\"Written by a Human, Not by AI\" class=\"not-by-ai-badge\" /></a></div>")
         ("blog-static"
          :base-directory "./content"
