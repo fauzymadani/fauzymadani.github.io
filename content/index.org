@@ -1,0 +1,11 @@
+#+TITLE: Home
+#+AUTHOR: fauzy
+#+OPTIONS: toc:nil num:nil
+
+Welcome to my blog!
+
+* Recent Posts
+- [[file:hello-world.org][Hello World]]
+
+* Archives
+- [[file:archive.org][Full Post Archive]]

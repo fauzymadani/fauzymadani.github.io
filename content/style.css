@@ -1,0 +1,296 @@
+/* ==========================================================================
+   Academic & Text-Oriented Stylesheet (Local Fonts, Pure Light Mode)
+   ========================================================================== */
+
+/* Local Self-Hosted Fonts */
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/newsreader-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/newsreader-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/jetbrainsmono-regular.woff2') format('woff2');
+}
+
+:root {
+  /* Warm Ivory Paper & Literary Graphite Palette (Light Mode Only) */
+  --bg: #f8f5ee;
+  --fg: #2c2825;
+  --fg-heading: #1a1715;
+  --muted: #756d63;
+  --border: #e3ddd1;
+  --link: #8d2e24;          /* Venetian / Oxblood Red */
+  --link-hover: #54160f;
+  --code-bg: #ece7dc;
+  --code-border: #ded8cb;
+  --quote-bg: #f2ece0;
+  --selection: #e7dac2;
+  
+  --font-serif: "Newsreader", "EB Garamond", "ETBembo", "Charis SIL", "Georgia", serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+::selection {
+  background: var(--selection);
+}
+
+/* --------------------------------------------------------------------------
+   Layout & Base
+   -------------------------------------------------------------------------- */
+
+html {
+  font-size: 19px;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+
+body {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.75;
+  max-width: 68ch;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem 1.25rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --------------------------------------------------------------------------
+   Top Navigation
+   -------------------------------------------------------------------------- */
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.site-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.site-nav a:hover {
+  color: var(--fg-heading);
+  text-decoration: none;
+}
+
+.site-nav .nav-title {
+  margin-right: auto;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--fg-heading);
+}
+
+/* --------------------------------------------------------------------------
+   Headings & Typography
+   -------------------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--fg-heading);
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 2.25rem;
+  margin-bottom: 0.6rem;
+}
+
+h1.title {
+  font-size: 2.2rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  border: none;
+}
+
+h2 {
+  font-size: 1.45rem;
+  margin-top: 2.2rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-style: italic;
+  font-weight: 500;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1.4rem;
+}
+
+/* Links */
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+a:hover {
+  color: var(--link-hover);
+  text-decoration-color: var(--link-hover);
+}
+
+/* --------------------------------------------------------------------------
+   Code & Preformatted
+   -------------------------------------------------------------------------- */
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+code {
+  background-color: var(--code-bg);
+  border: 1px solid var(--code-border);
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+}
+
+pre {
+  background-color: var(--code-bg);
+  border: 1px solid var(--code-border);
+  padding: 1rem 1.2rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  line-height: 1.55;
+  margin: 1.5rem 0;
+}
+
+pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: 1em;
+}
+
+/* --------------------------------------------------------------------------
+   Blockquotes & Lists
+   -------------------------------------------------------------------------- */
+
+blockquote {
+  margin: 1.5rem 0;
+  padding: 0.6rem 1.2rem;
+  background-color: var(--quote-bg);
+  border-left: 3px solid var(--link);
+  font-style: italic;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+ul, ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.4rem;
+}
+
+li {
+  margin-bottom: 0.4rem;
+}
+
+/* --------------------------------------------------------------------------
+   Tables (Academic Booktabs Style)
+   -------------------------------------------------------------------------- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 0.9em;
+  border-top: 2px solid var(--fg-heading);
+  border-bottom: 2px solid var(--fg-heading);
+}
+
+th, td {
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+}
+
+th {
+  font-weight: 600;
+  border-bottom: 1px solid var(--fg-heading);
+}
+
+tr:nth-child(even) td {
+  background-color: var(--code-bg);
+}
+
+/* --------------------------------------------------------------------------
+   Footer & Postamble
+   -------------------------------------------------------------------------- */
+
+#postamble {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+#postamble p {
+  margin: 0;
+}
+
+.not-by-ai-badge {
+  height: 38px;
+  width: auto;
+  display: block;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.not-by-ai-badge:hover {
+  opacity: 1;
+}
+
+.tag {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  background-color: var(--code-bg);
+  border: 1px solid var(--border);
+  padding: 0.1em 0.4em;
+  border-radius: 3px;
+  color: var(--muted);
+}
