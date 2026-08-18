@@ -4,8 +4,9 @@
 (defvar my-site-title "Fauzy's Blog")
 
 (defvar my-nav-links
-  '(("Home"    . "index.html")
-    ("Archive" . "archive.html")))
+  '(("Home"     . "index.html")
+    ("Archive"  . "archive.html")
+    ("Projects" . "projects.html")))
 
 (defun my-render-nav ()
   "Generate HTML navigation markup from `my-nav-links`."

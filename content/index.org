@@ -2,16 +2,73 @@
 #+AUTHOR: fauzy
 #+OPTIONS: toc:nil num:nil
 
-Welcome to my blog!
-
 #+begin_quote
 "I must not fear. Fear is the mind-killer. Fear is the little-death that brings total obliteration. I will face my fear. I will permit it to pass over me and through me. And when it has gone past I will turn the inner eye to see its path. Where the fear has gone there will be nothing. Only I will remain.
 #+end_quote
 
-This is my second blog page, my first real blog page is using [[https:bearblog.dev][bearblog]] but then i decided to make my own hosted using github pages. i choose this way because i wanted to integrate it with my emacs and write my blog inside emacs using =org-mode=. nothing is wrong with bearblog, everything is great. feel free to visit my [[https:yzuaf.bearblog.dev][previous blog]].
+This is my second blog page, my first real blog page is using [[https://bearblog.dev][bearblog]] but then i decided to make my own hosted using github pages. i choose this way because i wanted to integrate it with my emacs and write my blog inside emacs using =org-mode=. nothing is wrong with bearblog, everything is great. feel free to visit my [[https://yzuaf.bearblog.dev][previous blog]].
 
 
 My name is Fauzy.i love using free/libre software because it's cool, and i use GNU/Linux for my daily driver specifically using *Arch Linux* btw.
+
+
+* Contact
+You can find my email here: [[https://keys.openpgp.org/vks/v1/by-fingerprint/2CB9FE6B3550313D40F949535186C15EFF12F3E3][2CB9 FE6B 3550 313D 40F9 4953 5186 C15E FF12 F3E3]]
+And you can import this to your gpg client or whatever and my email will appear:
+#+BEGIN_EXPORT html
+<details>
+  <summary><b>Click this</b></summary>
+#+END_EXPORT
+
+#+begin_src text
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mQGNBGbunYUBDADw38hMBpaTMhQEkat+erLK2OoxGQg1vdQxdc78tyCy+9zy7QOV
+f2Nc9Wzez3mX53PNBCeYCszTo5SH0AGa530gQ/SpHuTGbR4QUJ9hn/v7N2iNsSYb
+8v4hfTkEMeBocjqCak8otxfp1oN4GZkuk/XM2mqN3vYnQkKeU7fClaCa6PHuaYaz
+TeAtyySvlQPmn3qeIK9SqOzdK75sADLjmCr0wm9/cFs/i8y28fxN/xvbyeFcJIE1
+UukDOCe1eQhmIkJCdE81Fz7ExPEBbYjRpYtpbc2ryUvhjCL/vGWrNuuboDdaq42a
+Yv+queCRZmUtt8PAdXbmHASrKX1VAFWEKnG+oLSljGC/eM/OpRWi7xruLbh74MOh
+7Pb1/Ebtf1Z6dEh76WG3cIXaSFJE/llByW15DaffObt3VyxM9XEZSD4v0UGDT9kJ
+04bIOWT/9zysCKo3iXc3IF6GgFcxLYziPLu1Ly5NQQgYlAhP8AQMLA6f/CcI2az2
+35BYhSqbfOJ4SV0AEQEAAbQfbWFkYW5pIDxmYXV6eW1hZGFuaTNAZ21haWwuY29t
+PokBzgQTAQoAOAIbAwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBCy5/ms1UDE9
+QPlJU1GGwV7/EvPjBQJpaBb5AAoJEFGGwV7/EvPjKK8MALkBp/3B54ssL4c0fm6+
+qjf3qXFPEydttT+rtnGbcOUIJSZlp7BbmzPt6T6HNQ8dH64MsQIxRUr/vJ0Vbcju
+p5svJmHQ2yZUUGtXLQc5xqfo6eDawW2fFKdO6ukf9wEzWp/OVUXe1NVVGK7zqayP
+Y0LZu0cbbAccqiVjX53KjwcepXhRcFIEtqH07nm+qZN4WxyZhEBbCtKOBU8f9wmv
+pVWrXiIWhE8Vo8HWnNlXtP5dfbqoJ+YllLQGDP68HANZy5jG6ykb+aZDXI0kXx3V
+Ls+SeIf3D+yc6C7w5pXh5a+Quj2fqH2ws964MojZ6E0xGSzlUvPAbzdwLaW16P3d
+C1spVrQH4fCD2/prgOgfViNUSsC4GUUNo/LRafgJzI25Rhar0QWslxoRwYwNfjYC
+UbT0sLAMRXKteOFI4khLgkr6LA2Vcoy1s+QLAb4qJZ/DbU7424q74Rc6hub/A8KD
++9vg02pQ4IBlg5e4ogQ917Xs7U8Obt+TsRIVH5uJSssbY7kBjQRm7p2FAQwAyprp
+HgLnKe1rkt2BOSUHFIgsZlYGtc15D27J/YKz4j+cLzG+didXA9CX3RIN19pJDdY8
+V/hLCtkaAqkDcjl7ew2WagtbqkvuCHvSON8woArdNS3VmgCgbR44BIciys5mIsaw
+hybmt0/4P5g/QlFvTO4WLes8BRIIBaHcJa9Fm0q3VRL41/UFW+XDZRI2Kso1e1mI
+wq+H0jV+8JSGSJQjeIlWocwxz66AgqrjUHuxaKnZGzAqO9t4KNt9grBTIfWO6TGG
+whwjjJRY3TUJGeQololB/lp0bejuAoOXjmuhrSe8cYTJ8a1Ye1gIJ6DYKtPJQw7+
+wNTV6sthlDDXIaj+IOUp60Uf6uVn+wNzI+d5xPV/oarYBQeezzZ0tvUfziromMDF
+3J79rRJ6Z9bs1yPOu2EQoMxutyeFowuE6qzbxC222H9Um1LtyaqDdLhkbt4qUqOT
+V9CWeB/usbslr8dbgsfmQQTtV2+2MmLddqfkzALppQBx694ei22H6OGQO+55ABEB
+AAGJAbYEGAEKACACGwwWIQQsuf5rNVAxPUD5SVNRhsFe/xLz4wUCaWgW+QAKCRBR
+hsFe/xLz49OaC/9WhyW57rarVlOLQgMxAhCt/08V0wHgNfEWdEjD4+i9QzgTZYpb
+47Kxx7C+qfJnucStFRtg9RoG93vpMpzKxIBkJ/1SSMo2p6hUmgiEW0Xz1LaneRlP
+TB/GYAW/2v1qxgaAry4/XjS2VyZfS29STPJUAFEfuXVteOcZQiYps3/Z+TW3inBw
+v91eyPMpG6+0otD/do31VOr6Q3Sr10YTMSG2HCHosVanoFEIUqbopynNIAo1cT1J
+uQrsiuar64juQa5dc753qv6TMy7Y0S4eiF/MiTWcMnuZ4pmNdykNWEoSFYWmewoA
+JwLnYbvmIkkuUj5A+HHzdDWT5xXHmnXwAekdAInSsGkHbGnaBQ1Cai4/zauq5zxx
+qva6nMCDju50NjtnnHheV0mK/hndvWjMn7J76KiPoUWIeNSClQoT8tv6Mm93f4cg
+xKyScUfvcLE+dDXtLk+ThVicLyvzF1o2/mUhRuEVtpgUUvNpB/KWn2+xuX41zMan
+rc8RAai5NjUc/38=
+=aZi+
+-----END PGP PUBLIC KEY BLOCK-----
+#+end_src
+
+#+BEGIN_EXPORT html
+</details>
+#+END_EXPORT
+
+If you don't want to do too much work by doing any of these, you just can visit my linkedin or my [[https://fauzy-dev.vercel.app/][website]] and you can click on my email directly there. sorry for the inconvenience. i'm don't have something yet to sanitize my email to store it in a link so it doesn't get scraped. 
 
 * Recent Posts
 - [[file:hello-world.org][Hello World]]

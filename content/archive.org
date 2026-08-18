@@ -2,3 +2,4 @@
 
 - [[file:hello-world.org][Hello World]]
 - [[file:index.org][Home]]
+- [[file:projects.org][Projects]]

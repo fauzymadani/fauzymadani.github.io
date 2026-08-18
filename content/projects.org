@@ -1,0 +1,17 @@
+#+TITLE: Projects
+
+Below is my projects portofolio, it's either mine or the projects i forked and do some modification to it. i will credit the original author if it's forked from other users. you will find more project on my github.
+
+*** Github
+- [[https://github.com/fauzymadani/cartflow][CartFlow]] - Go microservices demonstrating a choreography-based saga with compensation over NATS JetStream, fronted by a JWT gateway, running on Kubernetes with a Tilt live-reload dev loop. this is my backend portofolio.
+- [[https://github.com/fauzymadani/Attack-Disk][Attack-Disk]] - Simulating tool called [[https://kriegsmarinesammler.com/navigation-instruments/][Angriffsscheibe]] on the web. [[https://github.com/Alexei-Kornienko][Alexei Kornienko]] is the original owner of the project but i'm doing some modification. you can find original repository [[https://github.com/Alexei-Kornienko/Attack-Disk][here]].
+- [[https://github.com/fauzymadani/xpet][xpet]] - Cute pet for X11 written in C. the original author is [[https://github.com/uint23][uint32]] and i'm just do some modification. i just want to mess around with C a little bit.
+- [[https://github.com/fauzymadani/saltjq][saltjq]] - I'm trying to implement the =jq= command in linux but written in go.
+
+
+*** Others
+- [[https://github.com/fauzymadani/.emacs.d][.emacs.d]] - My emacs config focused in distraction free writing using =org-mode= and the functionality to be able to use =ox-publish= and integrate it using github action to publish my blog. keeping a minimal config and as close as possible to the vanilla emacs. it also support for doing some programming using yasnippet for snippet, eglot and flymake for lsp and diagnostic.
+- [[https://github.com/fauzymadani/dots][dotfiles]] - Configuration files managed by [[https://www.gnu.org/software/stow/][GNU Stow]] for farming dotfiles.
+
+
+That's all, all the list above is my newest project i've been doing recently. if you want to see more of my projects, you can see it on my github. maybe i'll add another more to the list later in the future.
