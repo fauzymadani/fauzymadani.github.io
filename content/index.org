@@ -2,9 +2,13 @@
 #+AUTHOR: fauzy
 #+OPTIONS: toc:nil num:nil
 
-#+begin_quote
-"I must not fear. Fear is the mind-killer. Fear is the little-death that brings total obliteration. I will face my fear. I will permit it to pass over me and through me. And when it has gone past I will turn the inner eye to see its path. Where the fear has gone there will be nothing. Only I will remain.
-#+end_quote
+#+begin_src text
+    -----BEGIN GEEK CODE BLOCK-----
+    Version: 3.1
+    GC/CS/E/FA/L/U d(++)?pu s(--): !a C++$>$ UBL++++>$ P+ L+++(++++)$>$ E+++ W++(+++)$>$ !N* !o K--? !w--(---) O? !M V PS PE Y PGP++ !t 5 X R tv b+ DI D+ G e>++ h++ !r? !z?
+    ------END GEEK CODE BLOCK------ 
+#+end_src
+
 
 This is my second blog page, my first real blog page is using [[https://bearblog.dev][bearblog]] but then i decided to make my own hosted using github pages. i choose this way because i wanted to integrate it with my emacs and write my blog inside emacs using =org-mode=. nothing is wrong with bearblog, everything is great. feel free to visit my [[https://yzuaf.bearblog.dev][previous blog]].
 
@@ -69,9 +73,3 @@ rc8RAai5NjUc/38=
 #+END_EXPORT
 
 If you don't want to do too much work by doing any of these, you just can visit my linkedin or my [[https://fauzy-dev.vercel.app/][website]] and you can click on my email directly there. sorry for the inconvenience. i'm don't have something yet to sanitize my email to store it in a link so it doesn't get scraped. 
-
-* Recent Posts
-- [[file:hello-world.org][Hello World]]
-
-* Archives
-- [[file:archive.org][Full Post Archive]]
