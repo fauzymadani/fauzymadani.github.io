@@ -172,15 +172,13 @@ kbd {
 }
  
 code {
-  background-color: var(--code-bg);
-  border: 1px solid var(--code-border);
+  border: 0px solid var(--code-border);
   padding: 0.15em 0.35em;
-  border-radius: 3px;
+  border-radius: 0px;
 }
  
 pre {
-  background-color: var(--code-bg);
-  border: 1px solid var(--code-border);
+  border: 0px solid var(--code-border);
   padding: 1rem 1.2rem;
   border-radius: 3px;
   overflow-x: auto;
