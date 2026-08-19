@@ -13,9 +13,6 @@
 This is my second blog page, my first real blog page is using [[https://bearblog.dev][bearblog]] but then i decided to make my own hosted using github pages. i choose this way because i wanted to integrate it with my emacs and write my blog inside emacs using =org-mode=. nothing is wrong with bearblog, everything is great. feel free to visit my [[https://yzuaf.bearblog.dev][previous blog]].
 
 
-My name is Fauzy.i love using free/libre software because it's cool, and i use GNU/Linux for my daily driver specifically using *Arch Linux* btw.
-
-
 * Contact
 You can find my email here: [[https://keys.openpgp.org/vks/v1/by-fingerprint/2CB9FE6B3550313D40F949535186C15EFF12F3E3][2CB9 FE6B 3550 313D 40F9 4953 5186 C15E FF12 F3E3]]
 And you can import this to your gpg client or whatever and my email will appear:
@@ -73,3 +70,10 @@ rc8RAai5NjUc/38=
 #+END_EXPORT
 
 If you don't want to do too much work by doing any of these, you just can visit my linkedin or my [[https://fauzy-dev.vercel.app/][website]] and you can click on my email directly there. sorry for the inconvenience. i'm don't have something yet to sanitize my email to store it in a link so it doesn't get scraped. 
+
+
+*List of Recent Post*
+
+#+BEGIN_EXPORT html
+<div id="recent-posts"></div>
+#+END_EXPORT

@@ -1,0 +1,5 @@
+#+TITLE: Blog
+
+#+BEGIN_EXPORT html
+<div id="blog-list"></div>
+#+END_EXPORT

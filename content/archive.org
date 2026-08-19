@@ -1,5 +1,7 @@
 #+TITLE: Archive
 
-- [[file:hello-world.org][Hello World]]
-- [[file:index.org][Home]]
-- [[file:projects.org][Projects]]
+List of archived post.
+
+#+BEGIN_EXPORT html
+<div id="archive-list"></div>
+#+END_EXPORT
