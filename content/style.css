@@ -422,6 +422,10 @@ th {
   text-decoration: underline;
 }
 
+.muted {
+    color: #6c757d
+}
+
 @media print {
   body {
     max-width: none;

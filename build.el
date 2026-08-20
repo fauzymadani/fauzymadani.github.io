@@ -18,7 +18,7 @@
 
 ;; --- post listing (homepage teaser, blog.html, archive.html) ---
 
-(defvar my-recent-posts-count 5
+(defvar my-recent-posts-count 4
   "Number of recent posts shown on the homepage teaser.")
 
 (defvar my-post-exclude '("index" "archive" "projects" "blog" "404")
@@ -83,17 +83,21 @@
   (let* ((active (seq-remove (lambda (p) (nth 3 p)) (my-collect-all-posts)))
          (sorted (my-sort-posts-newest-first active))
          (posts (seq-take sorted (min my-recent-posts-count (length sorted)))))
-    (concat "<ul class=\"post-list\">"
-            (mapconcat #'my-render-post-item posts "")
-            "</ul>")))
+    (if (null posts)
+        "<p class=\"muted\">nothing for now...</p>"
+      (concat "<ul class=\"post-list\">"
+              (mapconcat #'my-render-post-item posts "")
+              "</ul>"))))
 
 (defun my-render-blog-list-html ()
   "Every post that has not been archived, newest first."
   (let ((posts (my-sort-posts-newest-first
                 (seq-remove (lambda (p) (nth 3 p)) (my-collect-all-posts)))))
-    (concat "<ul class=\"post-list\">"
-            (mapconcat #'my-render-post-item posts "")
-            "</ul>")))
+    (if (null posts)
+        "<p class=\"muted\">nothing for now...</p>"
+      (concat "<ul class=\"post-list\">"
+              (mapconcat #'my-render-post-item posts "")
+              "</ul>"))))
 
 (defun my-render-archive-list-html ()
   "Archived posts, grouped and sorted by year (newest year first)."
@@ -160,12 +164,12 @@
          :time-stamp-file nil
          :html-head-include-default-style nil
          :html-head-include-scripts nil
-         :html-head "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>\n<script src=\"toc.js\" defer></script>"
+         :html-head "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<link rel=\"icon\" type=\"image/png\" href=\"favicon.png\"/>\n<link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"/>\n<script src=\"toc.js\" defer></script>"
          :html-preamble ,(my-render-nav)
          :html-postamble "<div class=\"footer-content\"><p>© %a · Written in Org-mode</p><a href=\"https://notbyai.fyi\" target=\"_blank\" rel=\"noopener\"><img src=\"images/not-by-ai.svg\" alt=\"Written by a Human, Not by AI\" class=\"not-by-ai-badge\" /></a></div><p class=\"footer-note\">All aspect in this page is written by a human.</p>")
         ("blog-static"
          :base-directory "./content"
-         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|svg\\|pdf\\|woff2\\|woff\\|ttf"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|svg\\|pdf\\|woff2\\|woff\\|ttf\\|ico"
          :publishing-directory "./public"
          :recursive t
          :publishing-function org-publish-attachment)
