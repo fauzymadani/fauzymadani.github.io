@@ -69,7 +69,7 @@ rc8RAai5NjUc/38=
 </details>
 #+END_EXPORT
 
-If you don't want to do too much work by doing any of these, you just can visit my linkedin or my [[https://fauzy-dev.vercel.app/][website]] and you can click on my email directly there. sorry for the inconvenience. i'm don't have something yet to sanitize my email to store it in a link so it doesn't get scraped. 
+If you don't want to do too much work by doing any of these, you just can visit my linkedin or my [[https://fauzy-dev.vercel.app/][website]] and you can click on my email directly there. sorry for the inconvenience. i don't have something yet to sanitize my email to store it in a link so it doesn't get scraped. 
 
 
 *List of Recent Post*
