@@ -2,6 +2,7 @@
 #+AUTHOR: fauzy
 #+DATE: 2026-08-20
 #+OPTIONS: toc:nil num:nil
+#+MACRO: kbd @@html:<kbd>$1</kbd>@@
 
 I've been using emacs for quite some time now, a decision I plan to stick with for now. several years back i've been using obsidian for note-taking purpose for all my learning journey. then i discovered emacs org-mode which caught my attention for its integration within a vast emacs ecosystem.
 
@@ -24,7 +25,7 @@ It is quite simple to install it, and it's already on [[https://melpa.org/#/unil
   (global-set-key (kbd "C-<insert>") #'uniline-launch-interface))
 #+end_src
 
-I'm not gonna use =defer= here since it's a small package. after that i restart my emacs and wait for the package install finished its job. to use it, i can call it using =M-x uniline-mode RET= and start moving my cursor using the arrow keys. here's an example:
+I'm not gonna use =defer= here since it's a small package. after that i restart my emacs and wait for the package install finished its job. to use it, i can call it using {{{kbd(M-x)}}} =uniline-mode= {{{kbd(RET)}}} and start moving my cursor using the arrow keys. here's an example:
 
 #+begin_src text                                               
                 ╭──────────────────╮   ╭─╮      ╭╮ ╭─╮ 
@@ -34,7 +35,7 @@ I'm not gonna use =defer= here since it's a small package. after that i restart 
                 ╰──────────────────╯   ╰─╯ ╰╯      ╰─╯
 #+end_src
 
-To quit uniline, i can press =C-c C-c= or =M-x uniline-mode RET= again. to use other features of uniline, i can use the interface by running =M-x uniline-launch-interface RET= or i can press =C-<insert>= as we set the keybinding before on the files.
+To quit uniline, i can press @@html: <kbd>C-c C-c</kbd> @@ or {{{kbd(M-x)}}} =uniline-mode= {{{kbd(RET)}}} again. to use other features of uniline, i can use the interface by running {{{kbd(M-x)}}} =uniline-launch-interface= {{{kbd(RET)}}} or i can press {{{kbd(C-&ltinsert&gt)}}} as we set the keybinding before on the files.
 
 #+begin_src text
 

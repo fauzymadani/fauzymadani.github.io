@@ -7,9 +7,9 @@
     ("Archive"  . "archive.html")
     ("Projects" . "projects.html")))
 (defun my-render-nav ()
-  "Generate HTML navigation markup from `my-nav-links`."
+  "Generate HTML navigation markup from `my-nav-links` with an image logo."
   (concat
-   (format "<nav class=\"site-nav\"><a href=\"index.html\" class=\"nav-title\">%s</a>" my-site-title)
+   "<nav class=\"site-nav\"><a href=\"index.html\" class=\"nav-title\"><img src=\"images/logo.png\" alt=\"Site Logo\" class=\"nav-logo\" /></a>"
    (mapconcat (lambda (link)
                 (format "<a href=\"%s\">%s</a>" (cdr link) (car link)))
               my-nav-links
@@ -169,7 +169,7 @@
          :html-postamble "<div class=\"footer-content\"><p>© %a · Written in Org-mode</p><a href=\"https://notbyai.fyi\" target=\"_blank\" rel=\"noopener\"><img src=\"images/not-by-ai.svg\" alt=\"Written by a Human, Not by AI\" class=\"not-by-ai-badge\" /></a></div><p class=\"footer-note\">All aspect in this page is written by a human.</p>")
         ("blog-static"
          :base-directory "./content"
-         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|svg\\|pdf\\|woff2\\|woff\\|ttf\\|ico"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|svg\\|pdf\\|woff2\\|woff\\|ttf\\|ico\\|cur"
          :publishing-directory "./public"
          :recursive t
          :publishing-function org-publish-attachment)
