@@ -1,0 +1,60 @@
+#+TITLE: Draw a Beautiful Diagram in Emacs
+#+AUTHOR: fauzy
+#+DATE: 2026-08-20
+#+OPTIONS: toc:nil num:nil
+
+I've been using emacs for quite some time now, a decision I plan to stick with for now. several years back i've been using obsidian for note-taking purpose for all my learning journey. then i discovered emacs org-mode which caught my attention for its integration within a vast emacs ecosystem.
+
+
+Now i use emacs for almost every purposes - such as note-taking, some light coding, writing my blog, and etc. for most of the time, it's note-taking because it's much simpler to do such in emacs than in obsidian. less distraction but more friction at the start.
+
+
+Recently I installed emacs =org-tree-slide= and =org-present= to be able to present something in emacs like a powerpoint or google slide, and i love it. then i wonder, if i want to put some diagram with it, it's kind of weird because i can see the attribute syntax while presenting it and it somewhat annoys me. what if i can draw a diagram inside emacs directly but not in =artist-mode=? then i discovered [[https://github.com/tbanel/uniline][uniline]], it let you draw a diagram directly using unicode in emacs, not an ASCII but a [[https://en.wikipedia.org/wiki/Unicode][Unicode]].
+
+
+** Installation
+It is quite simple to install it, and it's already on [[https://melpa.org/#/uniline][MELPA]] so we can go ahead and use =use-package= inside our =init.el=. here i'm gonna use the transient variant of the uniline instead of the hydra. what's the difference? the transient package is built into emacs and used heavily by Magit, so i don't have to install more package since i already have magit which make transient already installed. and transient mode acts more like a popup and will disappear after an actions. i can just add this to my init files:
+
+#+begin_src emacs-lisp
+(use-package uniline-transient
+  :ensure uniline
+  :after transient
+  :commands (uniline-mode uniline-launch-interface)
+  :config
+  (global-set-key (kbd "C-<insert>") #'uniline-launch-interface))
+#+end_src
+
+I'm not gonna use =defer= here since it's a small package. after that i restart my emacs and wait for the package install finished its job. to use it, i can call it using =M-x uniline-mode RET= and start moving my cursor using the arrow keys. here's an example:
+
+#+begin_src text                                               
+                ╭──────────────────╮   ╭─╮      ╭╮ ╭─╮ 
+  ╭─────────╮   │                  │   │░│╭╮╭╮  ││ │░│ 
+  │ hello!  ├───┤   some text      ├───┤░├╯││╰╮╭╯╰─┤░│••→ hello from 
+  ╰─────────╯   │                  │   │░│ ││ ╰╯   │░│    uniline!   
+                ╰──────────────────╯   ╰─╯ ╰╯      ╰─╯
+#+end_src
+
+To quit uniline, i can press =C-c C-c= or =M-x uniline-mode RET= again. to use other features of uniline, i can use the interface by running =M-x uniline-launch-interface RET= or i can press =C-<insert>= as we set the keybinding before on the files.
+
+#+begin_src text
+
+  ◆ ◊ ▪ ▫ △ → ╳ ▒ ░ ▓ ¤ ↔
+#+end_src
+
+And that is the example of an available option, there are much more option available on the interface.
+
+
+** Notice
+On the hydra variant of uniline, the 3D brushes are available. on the other hand, the transient will be supporting the 3D brushes soon as the readme stated:
+
+#+begin_quote
+3D brushes are experimental. They are available only with the Hydra interface. Transient coming soon.
+#+end_quote
+
+Keep in mind that in order to display the line smoothly, we need to use a font that is supporting unicode such as JetBrains Mono, Unifont, Agave, FreeMono and so on. check it on the readme [[https://github.com/tbanel/uniline#which-fonts][here]]. i use JetBrains Mono because that font is *SUPERIOR* to me than any other fonts.
+
+
+Check my emacs config [[https://github.com/fauzymadani/.emacs.d][here]] for more. this is my personal emacs config and it will grows as my understanding evolves. i am open for any critiques and i'd love to hear it. i will continue in the state of perpetual learning with it.
+
+
+/"All editors can save your files, but only Emacs can save your souls!"/.
