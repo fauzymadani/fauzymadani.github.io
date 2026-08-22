@@ -97,51 +97,95 @@ img, table, td, th, .badge-row img {
 }
 
 .site-nav {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  column-gap: 1.25rem;
-  row-gap: 0.35rem;
-  padding-bottom: 1rem;
-  margin-bottom: 2.5rem;
-  font-size: 0.9rem;
-}
-
-.site-nav a {
-  color: var(--muted);
-  text-decoration: none;
-}
-
-.site-nav a:hover {
-  color: var(--link);
-  text-decoration: underline;
-}
-
-.site-nav .nav-title {
-  margin-right: auto;
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--fg-heading);
+  display: block;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.75rem;
+  /* border-bottom: 1px solid var(--border);
+  border-top: 1px solid var(--border); */
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 0.82rem;
 }
 
 .site-nav .nav-title {
   display: flex;
   align-items: center;
-  margin-right: auto;
+  gap: 0.4rem;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--fg-heading);
   text-decoration: none;
+  margin: 0 0 0.5rem 0;
 }
 
 .site-nav .nav-logo {
-  height: 28px;    
+  height: 24px;
   width: auto;
   display: block;
   object-fit: contain;
-  transition: opacity 0.15s ease;
 }
 
-.site-nav .nav-title:hover .nav-logo {
-  opacity: 0.8;
+.site-nav a:not(.nav-title) {
+  color: #0000EE;
+  text-decoration: underline;
+}
+
+.site-nav a:not(.nav-title):visited {
+  color: #551A8B;
+}
+
+.site-nav a:not(.nav-title):hover {
+  color: #FF0000;
+}
+
+.site-nav a:not(.nav-title)::after {
+  content: " | ";
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.site-nav a:not(.nav-title):last-of-type::after {
+  content: "";
+}
+
+/* on wide screens, move the whole nav into a fixed vertical
+   column on the right (mirrors the TOC sidebar formula, opposite side).
+   below this breakpoint it stays the horizontal pipe-nav at the top. */
+@media (min-width: 1000px) {
+  .site-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    position: fixed;
+    top: 4rem;
+    left: calc(50% + 21rem + 2.5rem);
+    width: 150px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .site-nav .nav-title {
+    margin-bottom: 0.75rem;
+  }
+
+  .site-nav a:not(.nav-title)::after {
+    content: none;
+  }
+}
+
+.last-con {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 13px;
+}
+
+.last-con .label-date {
+    background-color: var(--selection);
+}
+
+.last-con .label {
+    color: var(--link);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -233,9 +277,9 @@ pre code {
 pre, code {
   font-family: var(--font-mono);
   font-size: 0.85em;
-  line-height: 1.0 !important;      
-  letter-spacing: 0px !important;    
-  font-variant-ligatures: none;        
+  line-height: 1.0 !important;
+  letter-spacing: 0px !important;
+  font-variant-ligatures: none;
 }
 
 blockquote {
@@ -342,7 +386,7 @@ th { font-weight: 700; }
 }
 
 #postamble {
-  margin-top: 4rem;
+  margin-top: 1rem;
   padding-top: 1.25rem;
   border-top: 1px solid var(--border);
   font-family: var(--font-sans);

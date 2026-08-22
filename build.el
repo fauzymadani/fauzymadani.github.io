@@ -9,7 +9,7 @@
 (defun my-render-nav ()
   "Generate HTML navigation markup from `my-nav-links` with an image logo."
   (concat
-   "<nav class=\"site-nav\"><a href=\"index.html\" class=\"nav-title\"><img src=\"images/logo.png\" alt=\"Site Logo\" class=\"nav-logo\" /></a>"
+   "<nav class=\"site-nav\"><a href=\"index.html\" class=\"nav-title\"></a>"
    (mapconcat (lambda (link)
                 (format "<a href=\"%s\">%s</a>" (cdr link) (car link)))
               my-nav-links

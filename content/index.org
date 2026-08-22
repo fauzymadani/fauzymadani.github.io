@@ -30,3 +30,8 @@ what’s happening."
 #+BEGIN_EXPORT html
 <div id="recent-posts"></div>
 #+END_EXPORT
+
+
+#+begin_export html
+<div class="last-con"><p class="label">Last Updated: <i class="label-date"><2026-08-22 Sat></i></p></div>
+#+end_export
