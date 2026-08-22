@@ -1,0 +1,128 @@
+#+TITLE: How I Installed GWX Knight's Cross Edition on Arch Linux
+#+AUTHOR: fauzy
+#+DATE: 2026-08-22
+#+OPTIONS: toc:nil num:nil
+
+I always love to play some war games especially about World War 2 where there's some historical weapon or machinery we can use at. i found myself quite fond of playing a submarine simulator games with a good mechanics, i don't really care about the graphics at all.
+
+
+I easily managed to run the games with steam using proton and it ran smoothly i'd rather say. not so long after quite some times, i discovered this megamod for Silent Hunter 3 called [[https://thegreywolves.com/][GWX - Knight's Cross Edition]]. it's a successor to the Grey Wolves eXpansion.
+
+
+I started doing some research on how to install it on the internet but not finding very much, then i joined their discord server and lucky me, i saw someone creating a post about it. i started by preparing all the necessary resource in order to get anything in place.
+
+
+* Installing Necessary Resources
+It's as easy as it says, i can just install the launcher from the AUR using a helper. i always use =yay=:
+
+#+begin_src bash
+yay -S --noconfirm faugus-launcher
+#+end_src
+
+It's gonna compile it since it's not a binary files unless there's a =bin= prefix to it. it's not gonna take long for it to install. after installing the launcher, i can start to install the megamod files from [[https://www.mediafire.com/file/ls3rxmqyky9wuv2/GWX-Knights_Cross_Edition_v2.5.7z/file][here]]. (and remember to download 7zip).
+
+#+begin_src bash
+total 21116
+drwxr-xr-x  8 yzuaf yzuaf     4096 Aug 12 07:15  .
+drwxr-xr-x  3 yzuaf yzuaf     4096 Aug 12 06:45  ..
+-rw-r--r--  1 yzuaf yzuaf    16896 Jun 14  2005  anim.act
+-rw-r--r--  1 yzuaf yzuaf    13312 Jun 14  2005  BezierWaypoint.act
+-rw-r--r--  1 yzuaf yzuaf   377856 Feb 14  2003  binkw32.dll
+-rw-r--r--  1 yzuaf yzuaf    86016 Oct 11  2011  CameraBehavior.act
+-rw-r--r--  1 yzuaf yzuaf    18944 Jun 14  2005  CameraManager.act
+-rw-r--r--  1 yzuaf yzuaf   195072 May  9  2010  d3d9.dll
+-rw-r--r--  1 yzuaf yzuaf      205 Sep 14  2014  d3d9.ini
+drwxr-xr-x 29 yzuaf yzuaf     4096 Mar  8 23:15  data
+-rw-r--r--  1 yzuaf yzuaf   489984 Aug 29  2002  dbghelp.dll
+drwxr-xr-x  9 yzuaf yzuaf     4096 Mar 12 01:50  documentation
+-rw-r--r--  1 yzuaf yzuaf    16896 Jun 14  2005  DrawLib.dll
+-rw-r--r--  1 yzuaf yzuaf    81920 Mar  1  2000  EaxMan.dll
+-rw-r--r--  1 yzuaf yzuaf    45056 Jun 14  2005  EffectManagers.act
+-rw-r--r--  1 yzuaf yzuaf   151552 Nov 12  2014  EnvSim.act
+-rw-r--r--  1 yzuaf yzuaf    24064 Jun 14  2005  EventCamera.act
+-rw-r--r--  1 yzuaf yzuaf    61440 Aug 12 07:37  FileManager.dll
+-rw-r--r--  1 yzuaf yzuaf    41472 Feb 13  2012  hsie.act
+-rw-r--r--  1 yzuaf yzuaf     1182 Jul  2  2012  HSIEContents.txt
+-rw-r--r--  1 yzuaf yzuaf     6374 Feb 20  2026  hsie.ini
+-rw-r--r--  1 yzuaf yzuaf    36372 Dec  9  2014  HSIEoptions.chm
+-rw-r--r--  1 yzuaf yzuaf   323584 Jul  6  2011  HsieOptionsSelector.exe
+-rw-r--r--  1 yzuaf yzuaf    73728 Jan 27  2005  Intro.dll
+-rw-r--r--  1 yzuaf yzuaf  1197568 Aug  8  2010  JSGME.exe
+-rw-r--r--  1 yzuaf yzuaf      218 Mar 12 02:17  JSGME.ini
+-rw-r--r--  1 yzuaf yzuaf   162794 Apr 24  2005 'JSGME Silent Hunter III Explorer example.jpg'
+-rw-r--r--  1 yzuaf yzuaf   458752 Feb 11  2005  Kernel.dll
+-rw-r--r--  1 yzuaf yzuaf    36864 Jun 14  2005  LipsSync.act
+-rw-r--r--  1 yzuaf yzuaf    49152 Jun 14  2005  MessageNet.dll
+-rw-r--r--  1 yzuaf yzuaf    11264 Jun 14  2005  MissionEngine.dll
+drwxr-xr-x 17 yzuaf yzuaf     4096 Mar 12 02:12  MODS
+-rw-r--r--  1 yzuaf yzuaf    15872 Jun 14  2005  movietex.act
+-rw-r--r--  1 yzuaf yzuaf   499712 Mar 19  2003  msvcp71.dll
+-rw-r--r--  1 yzuaf yzuaf   348160 Feb 21  2003  msvcr71.dll
+-rw-r--r--  1 yzuaf yzuaf   393216 Jun 14  2005  Multiplayer.act
+-rw-r--r--  1 yzuaf yzuaf   544768 Sep 30  2006  MultiSH3.exe
+-rw-r--r--  1 yzuaf yzuaf    65536 Jun 14  2005  Particles.act
+-rw-r--r--  1 yzuaf yzuaf    22016 Aug 16  2004  property.dll
+drwxr-xr-x  2 yzuaf yzuaf     4096 Dec 30  2025  Screenshots
+-rw-r--r--  1 yzuaf yzuaf   147456 Feb  1  2012  SH3Collisions.act
+drwxr-xr-x 15 yzuaf yzuaf     4096 Mar  6 21:22 'SH3 Commander'
+-rw-r--r--  1 yzuaf yzuaf   147456 Jun 14  2005  SH3Controllers.act
+-rw-r--r--  1 yzuaf yzuaf 11751354 Jun 14  2005  sh3.dll
+-rw-r--r--  1 yzuaf yzuaf   866803 Aug 20 19:43  sh3enhancer.log
+-rw-r--r--  1 yzuaf yzuaf  1384448 Aug 12 07:34  sh3.exe
+-rw-r--r--  1 yzuaf yzuaf   450560 Jun 14  2005  Sh3MissionEditor.exe
+-rw-r--r--  1 yzuaf yzuaf   282624 Jul  6  2012  SH3Sim.act
+-rw-r--r--  1 yzuaf yzuaf    73728 Jul 22  2012  SH3Sound.act
+-rw-r--r--  1 yzuaf yzuaf   167936 Jun 14  2005  SimData.dll
+-rw-r--r--  1 yzuaf yzuaf   217088 Jun 14  2005  Sound.act
+-rw-r--r--  1 yzuaf yzuaf    45056 Jun 14  2005  StateMachineCtl.act
+-rw-r--r--  1 yzuaf yzuaf    77824 Jun 17  2004  StateMachine.dll
+drwxr-xr-x  4 yzuaf yzuaf     4096 Mar  6 21:22  Support
+-rw-r--r--  1 yzuaf yzuaf    65536 Jun 14  2005  Utils.dll
+#+end_src
+
+All of the above is the files after i unzip it.
+
+NOTE: I have to run the original Silent Hunter 3 from the steam 1 time before doing anything.
+
+
+* Putting it Together
+All these below i have to do it in the following order.
+
+** Create The Main Entry
+After finished downloading all stuff above, i open the launcher and here's the step:
+1. open the launcher, and create new entry
+2. fill in the title, it's not gonna matter.
+3. enter path: =/home/user/Games/GWX-KnightsCross/sh3.exe=
+4. fill the prefix from steam for the prefix field: =/home/user/Faugus/gwx---knights-cross-edition=
+5. choose =GE-Proton-Latest=
+
+
+** Create HsieOptionsSelector Entry
+Do something similar with the main entry.
+1. enter title, whatever.
+2. path: =/home/user/Games/GWX-KnightsCross/HsieOptionsSelector.exe=
+3. select the same prefix as before.
+4. same proton version
+5. run the entry and i leave everything by default.
+
+
+** Create MultiSH3 Entry
+Same as before.
+1. enter the title.
+2. path: =/home/user/Games/GWX-KnightsCross/MultiSH3.exe=
+3. prefix is the same.
+4. same proton version.
+5. after entering all fields, run the entry.
+
+
+** Final Step, SH 3 Commander Entry
+This is the last entry we need.
+1. create the title.
+2. add this path: =/home/user/Games/GWX-KnightsCross/SH3 Commander/SH3Cmdr.exe=
+3. same prefix.
+4. and same proton version.
+5. run it.
+
+
+* Conclusion
+Run the SH3 Commander if i want to play in order to manage all the career entry. you may wanna have multiple career. and remember to enter the name and the starting year at the games similar to the ones you choose before. and please note that you have to buy the original games first on steam, and do not merge this megamod with the ones from steam. you have to create a separate directory.
