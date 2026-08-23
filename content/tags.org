@@ -1,0 +1,5 @@
+#+TITLE: Tags
+
+#+BEGIN_EXPORT html
+<div id="tags-list"></div>
+#+END_EXPORT

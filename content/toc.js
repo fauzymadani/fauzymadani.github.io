@@ -1,8 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
   var container = document.getElementById("content") || document.body;
-  var headings = container.querySelectorAll("h2, h3");
+  var headings = Array.prototype.filter.call(
+    container.querySelectorAll("h2, h3"),
+    function (h) {
+      return h.offsetParent !== null;
+    }
+  );
 
-  if (headings.length < 2) return; // skip toc for short posts
+  if (headings.length < 2) return; 
 
   var toc = document.createElement("nav");
   toc.id = "toc";

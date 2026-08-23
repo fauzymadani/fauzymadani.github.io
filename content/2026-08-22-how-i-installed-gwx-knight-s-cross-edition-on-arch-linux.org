@@ -2,6 +2,7 @@
 #+AUTHOR: fauzy
 #+DATE: 2026-08-22
 #+OPTIONS: toc:nil num:nil
+#+TAGS: modding, games, linux
 
 I always love to play some war games especially about World War 2 where there's some historical weapon or machinery we can use at. i found myself quite fond of playing a submarine simulator games with a good mechanics, i don't really care about the graphics at all.
 

@@ -3,6 +3,7 @@
 #+DATE: 2026-08-20
 #+OPTIONS: toc:nil num:nil
 #+MACRO: kbd @@html:<kbd>$1</kbd>@@
+#+TAGS: emacs
 
 I've been using emacs for quite some time now, a decision I plan to stick with for now. several years back i've been using obsidian for note-taking purpose for all my learning journey. then i discovered emacs org-mode which caught my attention for its integration within a vast emacs ecosystem.
 

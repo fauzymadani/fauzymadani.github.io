@@ -25,6 +25,9 @@ be lonely with no alternatives, content to be right here with the mood and textu
 what’s happening."
 
 
+~ Pema Chödrön
+
+
 ** Recent Post
 
 #+BEGIN_EXPORT html
@@ -33,5 +36,5 @@ what’s happening."
 
 
 #+begin_export html
-<div class="last-con"><p class="label">Last Updated: <i class="label-date"><2026-08-22 Sat></i></p></div>
+<div class="last-con"><p class="label">Last Updated: <i class="label-date"><2026-08-23 Sun></i></p></div>
 #+end_export

@@ -148,40 +148,13 @@ img, table, td, th, .badge-row img {
   content: "";
 }
 
-/* on wide screens, move the whole nav into a fixed vertical
-   column on the right (mirrors the TOC sidebar formula, opposite side).
-   below this breakpoint it stays the horizontal pipe-nav at the top. */
-@media (min-width: 1000px) {
-  .site-nav {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.6rem;
-    position: fixed;
-    top: 4rem;
-    left: calc(50% + 21rem + 2.5rem);
-    width: 150px;
-    padding-bottom: 0;
-    margin-bottom: 0;
-  }
-
-  .site-nav .nav-title {
-    margin-bottom: 0.75rem;
-  }
-
-  .site-nav a:not(.nav-title)::after {
-    content: none;
-  }
-}
-
 .last-con {
     margin-top: 2.5rem;
     margin-bottom: 1rem;
-    font-size: 13px;
 }
 
 .last-con .label-date {
-    background-color: var(--selection);
+    background-color: var(--border);
 }
 
 .last-con .label {
@@ -385,6 +358,48 @@ th { font-weight: 700; }
   margin-bottom: 0.4rem;
 }
 
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tag-group {
+  display: none;
+  margin-bottom: 2rem;
+  border: 0.1px solid var(--border);
+  padding: 0.5rem;
+}
+
+.tag-group:target {
+  display: block;
+}
+
+.tag-group h2 {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+.tag-back {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 0.75rem;
+}
+
+.tag-back:hover {
+  color: var(--link);
+}
+
 #postamble {
   margin-top: 1rem;
   padding-top: 1.25rem;
@@ -421,7 +436,22 @@ th { font-weight: 700; }
   opacity: 1;
 }
 
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.6rem;
+}
+
+.tag-label {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
 .tag {
+  display: inline-block;
   font-family: var(--font-sans);
   font-size: 0.75rem;
   background-color: var(--code-bg);
@@ -429,6 +459,12 @@ th { font-weight: 700; }
   padding: 0.1em 0.4em;
   border-radius: 3px;
   color: var(--muted);
+  text-decoration: none;
+}
+
+.tag:hover {
+  color: var(--link);
+  border-color: var(--link);
 }
 
 #toc {
