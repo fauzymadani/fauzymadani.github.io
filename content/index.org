@@ -10,22 +10,7 @@
 #+end_src
 
 
-
-"When we draw a line down the center of a page, we know who we are if we’re on the
-right side and who we are if we’re on the left side. But we don’t know who we are when
-we don’t put ourselves on either side. Then we just don’t know what to do. We just
-don’t know. We have no reference point, no hand to hold. At that point we can either
-freak out or settle in. Contentment is a synonym for loneliness, cool loneliness, settling
-down with cool loneliness. We give up believing that being able to escape our loneliness
-is going to bring any lasting happiness or joy or sense of well-being or courage or
-strength. Usually we have to give up this belief about a billion times, again and again
-making friends with our jumpiness and dread, doing the same old thing a billion times
-with awareness. Then without our even noticing, something begins to shift. We can just
-be lonely with no alternatives, content to be right here with the mood and texture of
-what’s happening."
-
-
-~ Pema Chödrön
+"I must not fear. Fear is the mind-killer. Fear is the little-death that brings total obliteration. I will face my fear. I will permit it to pass over me and through me. And when it has gone past I will turn the inner eye to see its path. Where the fear has gone there will be nothing. Only I will remain."
 
 
 ** Recent Post

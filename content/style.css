@@ -1,25 +1,65 @@
 @font-face {
-  font-family: 'IBMPlexSans';
+  font-family: 'Charis';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('fonts/IBMPlexSans-Regular.woff2') format('woff2');
+  src: url('fonts/Charis-Regular.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: 'IBMPlexSans';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('fonts/IBMPlexSans-Bold.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'IBMPlexSans';
+  font-family: 'Charis';
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url('fonts/IBMPlexSans-Italic.woff2') format('woff2');
+  src: url('fonts/Charis-Italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Charis';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/Charis-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Charis';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/Charis-MediumItalic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Charis';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/Charis-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Charis';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/Charis-SemiBoldItalic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Charis';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/Charis-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Charis';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/Charis-BoldItalic.woff2') format('woff2');
 }
 
 @font-face {
@@ -45,7 +85,7 @@
   --quote-bg: #f4f4f4;
   --selection: #cfe0f5;
 
-  --font-serif: "IBMPlexSans", Georgia, "Times New Roman", serif;
+  --font-serif: "Charis", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
@@ -358,11 +398,47 @@ th { font-weight: 700; }
   margin-bottom: 0.4rem;
 }
 
-.tag-cloud {
+.archive-year summary {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 1rem 0 0.5rem;
+  list-style: none;
+}
+
+.archive-year summary::-webkit-details-marker {
+  display: none;
+}
+
+.archive-year summary::before {
+  content: "▸";
+  display: inline-block;
+  width: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.archive-year[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.tag-cloud {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tag-cloud li {
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.tag-cloud li::before {
+  content: "- ";
 }
 
 .tag-group {

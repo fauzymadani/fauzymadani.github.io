@@ -126,24 +126,27 @@ linking to their section on tags.html, with a label prefix. \"\" if none."
               "</ul>"))))
 
 (defun my-render-archive-list-html ()
-  "Archived posts, grouped and sorted by year (newest year first)."
+  "Archived posts, grouped by year (newest year first) inside collapsible
+<details> dropdowns."
   (let* ((posts (seq-filter (lambda (p) (nth 3 p)) (my-collect-all-posts)))
          (by-year (sort (seq-group-by
                           (lambda (p) (format-time-string "%Y" (nth 1 p)))
                           posts)
                          (lambda (a b) (string> (car a) (car b))))))
-    (mapconcat
-     (lambda (group)
-       (format "<div class=\"archive-year\"><h2>%s</h2><ul class=\"post-list\">%s</ul></div>"
-               (car group)
-               (mapconcat #'my-render-post-item
-                          (my-sort-posts-newest-first (cdr group))
-                          "")))
-     by-year
-     "")))
+    (if (null by-year)
+        "<p class=\"muted\">nothing archived yet...</p>"
+      (mapconcat
+       (lambda (group)
+         (format "<details class=\"archive-year\"><summary>%s</summary><ul class=\"post-list\">%s</ul></details>"
+                 (car group)
+                 (mapconcat #'my-render-post-item
+                            (my-sort-posts-newest-first (cdr group))
+                            "")))
+       by-year
+       ""))))
 
 (defun my-render-tags-page-html ()
-  "A visible cloud of tag names up top; each tag's post list is hidden
+  "A visible list of tag names up top; each tag's post list is hidden
 by default and revealed via CSS :target when its anchor is visited."
   (let* ((posts (my-collect-all-posts))
          (pairs (seq-mapcat
@@ -154,13 +157,13 @@ by default and revealed via CSS :target when its anchor is visited."
     (if (null by-tag)
         "<p class=\"muted\">no tags yet...</p>"
       (concat
-       "<div class=\"tag-cloud\">"
+       "<ul class=\"tag-cloud\">"
        (mapconcat (lambda (group)
-                    (format "<a href=\"tags.html#tag-%s\" class=\"tag\">%s</a>"
+                    (format "<li><a href=\"tags.html#tag-%s\" class=\"tag\">%s</a></li>"
                             (my-slugify (car group)) (car group)))
                   by-tag
                   "")
-       "</div>"
+       "</ul>"
        (mapconcat
         (lambda (group)
           (let* ((tag (car group))
