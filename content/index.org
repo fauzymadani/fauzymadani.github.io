@@ -2,16 +2,39 @@
 #+AUTHOR: fauzy
 #+OPTIONS: toc:nil num:nil
 
-#+begin_src text
-    -----BEGIN GEEK CODE BLOCK-----
-    Version: 3.1
-    GC/CS/E/FA/L/U d(++)?pu s(--): !a C++$>$ UBL++++>$ P+ L+++(++++)$>$ E+++ W++(+++)$>$ !N* !o K--? !w--(---) O? !M V PS PE Y PGP++ !t 5 X R tv b+ DI D+ G e>++ h++ !r? !z?
-    ------END GEEK CODE BLOCK------ 
-#+end_src
+#+BEGIN_EXPORT html
+<pre>
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
 
+"I must not fear. Fear is the mind-killer. 
+Fear is the little-death that brings total obliteration. 
+I will face my fear. I will permit it to pass over me and through me.
+And when it has gone past I will turn the inner eye to see its path. 
+Where the fear has gone there will be nothing. Only I will remain."
+-----BEGIN PGP SIGNATURE-----
 
-"I must not fear. Fear is the mind-killer. Fear is the little-death that brings total obliteration. I will face my fear. I will permit it to pass over me and through me. And when it has gone past I will turn the inner eye to see its path. Where the fear has gone there will be nothing. Only I will remain."
+iQGzBAEBCgAdFiEELLn+azVQMT1A+UlTUYbBXv8S8+MFAmqPzEMACgkQUYbBXv8S
+8+OzaAv+Lcm44wK+4wfMswO9B6mIvZDd6p3A9TV8BlI6WMb6hIrJnZ041CBq0m0a
+WcVgjqwLtsknNzeJFkuSQV1WS/VwwVlj1pnL7ZBhHFbOkRuT2ir2gOUMO8+Kzi8l
+rHrXeQT8WhGzDVMuMhrjBf/wQ8tUOd6+taCr7zeGgZ1eEGFh0iLAfqLiKS8pIN06
+BVmvvNztkWGMRrttS3L1lUnF9Qg7GyVE9t+xzILZKPV+85YdUgI7PtLQAFSAxGPT
+85j0jSkz8Epo9TIPKVMWPUo3hv1tKi2e5dexm1QuDKl/g6iFmoaBj2vOsSruqMqq
+acoD2YYcudETiCYQsNhUWoVFZd/wBv6cm8NOoUALsAg1OEb94sz7ud0XEswlsSX3
+LtJTka5JzyT78Q5j6JVQhv53A1jLEh8UaBbzkG/pajZjykxE/6Dekyd8/M8g+hFE
+1nOL54RBFpbAmIxlbIVpS8VFouXSdHPWv3LsB//KrGOdckL6nxR9tNsrHZ+wmr2H
+9SOdOwy6
+=gk9D
+-----END PGP SIGNATURE-----
 
+</pre>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<a href="https://matrix.to/#/@osaragi44:matrix.org">
+  <img src="https://img.shields.io/badge/Matrix-%40osaragi44%3Amatrix.org-000000?style=social&logo=matrix&logoColor=black" alt="Matrix">
+</a>
+#+END_EXPORT
 
 ** Recent Post
 
