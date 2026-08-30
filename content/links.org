@@ -1,0 +1,20 @@
+#+TITLE: Links
+#+AUTHOR: fauzy
+#+OPTIONS: toc:nil num:nil
+
+A small list of tools, software, and things I use.
+
+*** Software
+- [[https://www.gnu.org/software/emacs/][Emacs]] - My main writing and editing environment.
+- [[https://orgmode.org/][Org Mode]] - Plain-text notes, writing, and publishing.
+- [[https://archlinux.org/][Arch Linux]] - My operating system of choice.
+- [[https://calibre-ebook.com/][Calibre]] - Ebook library, conversion, and management.
+- [[https://www.gnu.org/software/stow/][GNU Stow]] - For keeping my dotfiles organized.
+- [[https://www.ledger-cli.org/][Ledger CLI]] - Plain-text accounting and finances.
+- [[https://pwmt.org/projects/zathura/][Zathura]] - Simple PDF reading with a minimal interface.
+
+*** Useful things
+- [[https://www.gnu.org/][GNU Project]] - The software ecosystem I trust most.
+
+*** More
+- [[https://matrix.to/#/@osaragi44:matrix.org][Matrix]] - My chat home.

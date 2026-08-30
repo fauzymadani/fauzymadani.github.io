@@ -4,6 +4,7 @@
 (defvar my-nav-links
   '(("Home"     . "index.html")
     ("Blog"     . "blog.html")
+    ("Links"    . "links.html")
     ("Tags"     . "tags.html")
     ("Archive"  . "archive.html")
     ("Projects" . "projects.html")))
@@ -22,7 +23,7 @@
 (defvar my-recent-posts-count 4
   "Number of recent posts shown on the homepage teaser.")
 
-(defvar my-post-exclude '("index" "archive" "projects" "blog" "404" "tags")
+(defvar my-post-exclude '("index" "archive" "projects" "blog" "404" "tags" "links")
   "Org files that are not posts, skipped from every listing.")
 
 (defun my-org-file-title (file)
@@ -63,22 +64,60 @@ Expects a comma-separated list, e.g. #+TAGS: some, tags"
     (when v
       (mapcar #'string-trim (split-string v ",")))))
 
+(defun my-org-file-summary (file)
+  "Extract a short summary from the first prose paragraph in FILE."
+  (when (file-exists-p file)
+    (with-temp-buffer
+      (insert-file-contents file)
+      (goto-char (point-min))
+      (while (re-search-forward "^#\\+.*$" nil t)
+        (replace-match "" nil nil))
+      (goto-char (point-min))
+      (let* ((text (buffer-substring-no-properties (point-min) (point-max)))
+             (text (replace-regexp-in-string "\\\\[a-zA-Z]+{}" "" text))
+             (text (replace-regexp-in-string "\\[\\[[^]]+\\]\\[[^]]+\\]\\]" "" text))
+             (text (replace-regexp-in-string "\\[\\[[^]]+\\]\\]" "" text))
+             (text (replace-regexp-in-string "='\([^=]+\)'=" "\\1" text))
+             (text (replace-regexp-in-string "=\\([^=]+\\)=" "\\1" text))
+             (text (replace-regexp-in-string "\*\\([^*]+\\)\*" "\\1" text))
+             (text (replace-regexp-in-string "/\\([^/]+\\)/" "\\1" text))
+             (text (replace-regexp-in-string "~\\([^~]+\\)~" "\\1" text))
+             (text (replace-regexp-in-string "{{{[^}]+}}}" "" text))
+             (text (replace-regexp-in-string "@@html:.*?@@" "" text t))
+             (text (replace-regexp-in-string "\\n\\n+" "\n" text))
+             (paragraphs (split-string text "\n" t))
+             (first-paragraph (seq-find (lambda (p) (not (string-empty-p (string-trim p)))) paragraphs))
+             (clean (replace-regexp-in-string "[[:space:]]+" " " (string-trim (or first-paragraph ""))))
+             (clean (if (> (length clean) 160)
+                        (concat (substring clean 0 157) "...")
+                      clean)))
+        clean))))
+
+(defun my-estimate-reading-time (text)
+  "Estimate a reading time in minutes from TEXT."
+  (let* ((words (split-string (replace-regexp-in-string "[^[:word:]]+" " " (or text "")) "[[:space:]]+" t))
+         (word-count (length (seq-filter (lambda (w) (not (string-empty-p w))) words)))
+         (minutes (max 1 (/ (+ word-count 199) 200))))
+    (format "%d min read" minutes)))
+
 (defun my-slugify (s)
   "Lowercase S and collapse runs of non-alphanumeric chars into a single dash."
   (string-trim (downcase (replace-regexp-in-string "[^a-zA-Z0-9]+" "-" s)) "-" "-"))
 
 (defun my-collect-all-posts ()
-  "Return a list of (TITLE DATE HTML-FILE ARCHIVED-P TAGS) for every post."
+  "Return a list of (TITLE DATE HTML-FILE ARCHIVED-P TAGS SUMMARY) for every post."
   (let* ((files (directory-files "./content" t "\\.org$"))
          (files (seq-remove
                  (lambda (f) (member (file-name-base f) my-post-exclude))
                  files)))
     (mapcar (lambda (f)
-              (list (my-org-file-title f)
-                    (my-org-file-date f)
-                    (concat (file-name-base f) ".html")
-                    (my-post-archived-p f)
-                    (my-org-file-tags f)))
+              (let* ((summary (my-org-file-summary f)))
+                (list (my-org-file-title f)
+                      (my-org-file-date f)
+                      (concat (file-name-base f) ".html")
+                      (my-post-archived-p f)
+                      (my-org-file-tags f)
+                      summary)))
             files)))
 
 (defun my-sort-posts-newest-first (posts)
@@ -87,9 +126,19 @@ Expects a comma-separated list, e.g. #+TAGS: some, tags"
         (lambda (a b) (time-less-p (nth 1 b) (nth 1 a)))))
 
 (defun my-render-post-item (p)
-  "Render a single <li> entry for post P."
-  (format "<li><a href=\"%s\">%s</a> <span class=\"meta\">%s</span></li>"
-          (nth 2 p) (nth 0 p) (format-time-string "%Y-%m-%d" (nth 1 p))))
+  "Render a single card entry for post P with summary and metadata."
+  (let* ((title (nth 0 p))
+         (date-str (format-time-string "%Y-%m-%d" (nth 1 p)))
+         (summary (or (nth 5 p) ""))
+         (tags (nth 4 p))
+         (tags-html (my-render-tags-html tags))
+         (read-time (my-estimate-reading-time summary)))
+    (format "<li class=\"post-card\"><div class=\"post-card-body\"><a href=\"%s\" class=\"post-link\">%s</a><div class=\"post-meta-row\"><span class=\"meta\">%s</span><span class=\"meta\">•</span><span class=\"meta\">%s</span></div>%s%s</div></li>"
+            (nth 2 p) title date-str read-time
+            (if (and summary (not (string-empty-p summary)))
+                (format "<p class=\"post-summary\">%s</p>" summary)
+              "")
+            tags-html)))
 
 (defun my-render-tags-html (tags)
   "Render TAGS (a list of strings) as a row of clickable .tag chips
@@ -126,8 +175,7 @@ linking to their section on tags.html, with a label prefix. \"\" if none."
               "</ul>"))))
 
 (defun my-render-archive-list-html ()
-  "Archived posts, grouped by year (newest year first) inside collapsible
-<details> dropdowns."
+  "Year-based archive with a dropdown filter and all years shown by default."
   (let* ((posts (seq-filter (lambda (p) (nth 3 p)) (my-collect-all-posts)))
          (by-year (sort (seq-group-by
                           (lambda (p) (format-time-string "%Y" (nth 1 p)))
@@ -135,45 +183,57 @@ linking to their section on tags.html, with a label prefix. \"\" if none."
                          (lambda (a b) (string> (car a) (car b))))))
     (if (null by-year)
         "<p class=\"muted\">nothing archived yet...</p>"
-      (mapconcat
-       (lambda (group)
-         (format "<details class=\"archive-year\"><summary>%s</summary><ul class=\"post-list\">%s</ul></details>"
-                 (car group)
-                 (mapconcat #'my-render-post-item
-                            (my-sort-posts-newest-first (cdr group))
-                            "")))
-       by-year
-       ""))))
+      (let ((first-year t))
+        (concat
+         "<label class=\"archive-filter-label\" for=\"archive-year-select\">View year:</label>"
+         "<select id=\"archive-year-select\" class=\"archive-filter\">"
+         (mapconcat (lambda (group)
+                      (let ((selected (if first-year
+                                          (progn (setq first-year nil) " selected=\"selected\"") "")))
+                        (format "<option value=\"year-%s\"%s>%s</option>"
+                                (car group) selected (car group))))
+                    by-year
+                    "")
+         "</select>"
+         "<div class=\"archive-groups\">"
+         (mapconcat
+          (lambda (group)
+            (let* ((year (car group))
+                   (year-posts (my-sort-posts-newest-first (cdr group))))
+              (format "<section class=\"archive-year\" id=\"year-%s\"><h2>%s</h2><ul class=\"mini-post-list\">%s</ul></section>"
+                      year year
+                      (mapconcat (lambda (p)
+                                   (format "<li class=\"mini-post\"><a href=\"%s\">%s</a> <span class=\"meta\">%s</span></li>"
+                                           (nth 2 p) (nth 0 p)
+                                           (format-time-string "%Y-%m-%d" (nth 1 p))))
+                                 year-posts
+                                 ""))))
+          by-year
+          "")
+         "</div>"
+         "<script>"
+         "(function() { const select = document.getElementById('archive-year-select'); const sections = Array.from(document.querySelectorAll('.archive-year')); if (!select || sections.length === 0) return; const show = (value) => { sections.forEach((s) => { s.style.display = (s.id === value) ? 'block' : 'none'; }); }; select.addEventListener('change', (e) => show(e.target.value)); show(select.value || sections[0].id); })();"
+         "</script>")))))
+
+(defun my-render-home-meta-html ()
+  "Show the actual site build timestamp, which updates whenever the site rebuilds."
+  (format "<p class=\"home-meta\">Last build: %s</p>"
+          (format-time-string "%Y-%m-%d %H:%M:%S" (current-time))))
 
 (defun my-render-tags-page-html ()
-  "A visible list of tag names up top; each tag's post list is hidden
-by default and revealed via CSS :target when its anchor is visited."
+  "A plain tag index: just the available tags, no duplicated tag sections."
   (let* ((posts (my-collect-all-posts))
-         (pairs (seq-mapcat
-                 (lambda (p) (mapcar (lambda (tag) (cons tag p)) (nth 4 p)))
-                 posts))
-         (by-tag (sort (seq-group-by #'car pairs)
-                        (lambda (a b) (string-lessp (downcase (car a)) (downcase (car b)))))))
-    (if (null by-tag)
+         (tags (sort (delete-dups (apply #'append (mapcar (lambda (p) (nth 4 p)) posts))) #'string-lessp)))
+    (if (null tags)
         "<p class=\"muted\">no tags yet...</p>"
       (concat
-       "<ul class=\"tag-cloud\">"
-       (mapconcat (lambda (group)
+       "<ul class=\"tag-cloud plain-list\">"
+       (mapconcat (lambda (tag)
                     (format "<li><a href=\"tags.html#tag-%s\" class=\"tag\">%s</a></li>"
-                            (my-slugify (car group)) (car group)))
-                  by-tag
+                            (my-slugify tag) tag))
+                  tags
                   "")
-       "</ul>"
-       (mapconcat
-        (lambda (group)
-          (let* ((tag (car group))
-                 (tag-posts (my-sort-posts-newest-first (mapcar #'cdr (cdr group)))))
-            (format "<div class=\"tag-group\" id=\"tag-%s\"><a href=\"tags.html\" class=\"tag-back\">[close]</a><h2>%s</h2><ul class=\"post-list\">%s</ul></div>"
-                    (my-slugify tag)
-                    tag
-                    (mapconcat #'my-render-post-item tag-posts ""))))
-        by-tag
-        "")))))
+       "</ul>"))))
 
 (defun my-inject-marker (file marker-id render-fn)
   "Replace <div id=\"MARKER-ID\"></div> in FILE with the output of RENDER-FN."
@@ -188,6 +248,7 @@ by default and revealed via CSS :target when its anchor is visited."
 
 (defun my-inject-all ()
   (my-inject-marker "./public/index.html" "recent-posts" #'my-render-recent-posts-html)
+  (my-inject-marker "./public/index.html" "home-meta" #'my-render-home-meta-html)
   (my-inject-marker "./public/blog.html" "blog-list" #'my-render-blog-list-html)
   (my-inject-marker "./public/archive.html" "archive-list" #'my-render-archive-list-html)
   (my-inject-marker "./public/tags.html" "tags-list" #'my-render-tags-page-html)
