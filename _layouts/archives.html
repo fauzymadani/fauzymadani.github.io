@@ -1,0 +1,27 @@
+---
+layout: page
+---
+
+{% assign archived_posts = site.posts | where: "archived", true %}
+
+{% if archived_posts.size > 0 %}
+  <div id="archives" class="pl-xl-3">
+    {% for post in archived_posts %}
+      {% assign year = post.date | date: "%Y" %}
+      {% if year != last_year %}
+        {% unless forloop.first %}</ul>{% endunless %}
+        <time class="year lead d-block">{{ year }}</time>
+        <ul class="list-unstyled">
+        {% assign last_year = year %}
+      {% endif %}
+      <li>
+        <span class="date day">{{ post.date | date: "%d" }}</span>
+        <span class="date month small text-muted ms-1">{{ post.date | date: "/ %m" }}</span>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </li>
+      {% if forloop.last %}</ul>{% endif %}
+    {% endfor %}
+  </div>
+{% else %}
+  <p>No archived posts yet.</p>
+{% endif %}
