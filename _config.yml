@@ -1,0 +1,92 @@
+title: Fauzy
+description: A personal blog about Emacs, Linux, and other things.
+url: "https://fauzymadani.github.io"
+baseurl: ""
+
+theme: jekyll-theme-chirpy
+
+exclude:
+  - build.el
+  - build.sh
+  - content
+  - public
+  - vendor
+  - Gemfile
+  - Gemfile.lock
+
+lang: en
+timezone: Asia/Jakarta
+
+author:
+  name: Fauzy
+
+avatar: /assets/img/avatar.png
+
+github:
+  username: fauzymadani
+
+social:
+  name: Fauzy
+  email: fauzymadani3@gmail.com
+  links:
+    - https://github.com/fauzymadani
+
+markdown: kramdown
+highlighter: rouge
+paginate: 10
+paginate_path: /page/:num/
+permalink: /posts/:title/
+
+kramdown:
+  footnote_backlink: "&#8617;&#xfe0e;"
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: highlight
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+
+toc: true
+comments:
+  active: false
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+      toc: true
+      permalink: /posts/:title/
+      compress_html: false
+  - scope:
+      path: ""
+      type: tabs
+    values:
+      layout: page
+      permalink: /:title/
+      compress_html: false
+
+collections:
+  tabs:
+    output: true
+    sort_by: order
+
+jekyll-archives:
+  enabled: [categories, tags]
+  layouts:
+    category: category
+    tag: tag
+  permalinks:
+    category: /categories/:name/
+    tag: /tags/:name/
+
+plugins:
+  - jekyll-paginate
+  - jekyll-archives
+  - jekyll-include-cache
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Change `theme` above if you decide to try another Jekyll theme.

@@ -1,0 +1,22 @@
+---
+---
+
+@use 'abstracts/variables' with (
+  $theme: '{{ site.theme_mode }}'
+);
+
+@use 'main';
+
+// Keep source formatting visible inside code blocks while allowing long lines
+// to scroll instead of collapsing newlines into spaces.
+.highlight,
+div[class^='language-'] {
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.highlight code,
+div[class^='language-'] code {
+  display: block;
+  white-space: pre;
+}

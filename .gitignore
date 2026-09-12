@@ -3,3 +3,8 @@ public/
 *~
 *.html
 !content/*.html
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.bundle/
+vendor/bundle/

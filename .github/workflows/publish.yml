@@ -1,4 +1,4 @@
-name: Publish Blog
+name: Publish Jekyll Blog
 
 on:
   push:
@@ -19,14 +19,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: purcell/setup-emacs@master
+      - uses: ruby/setup-ruby@v1
         with:
-          version: 29.3
-      - name: Build site
-        run: emacs --batch -Q -l build.el
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Build Jekyll site
+        run: bundle exec jekyll build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./_site
 
   deploy:
     environment:
