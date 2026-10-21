@@ -12,6 +12,12 @@ code{
     font-family: 'JetBrains Mono', Monaco, Menlo, Consolas, 'Courier New', monospace;
 }
 
+html[data-theme="dark"] code {
+    color: #e2ded6;
+    background-color: #30302f;
+    border-color: #5a5750;
+}
+
 pre {
     font-family: 'JetBrains Mono', Monaco, Menlo, Consolas, 'Courier New', monospace;
     margin: 12px 0;
@@ -97,4 +103,64 @@ pre {
     .gu { color: #75715e; } /* Generic.Subheading & Diff Unified/Comment? */
     .gd { color: #f92672; } /* Generic.Deleted & Diff Deleted */
     .gi { color: #a6e22e; } /* Generic.Inserted & Diff Inserted */
+}
+
+html[data-theme="dark"] pre,
+html[data-theme="dark"] pre > code,
+html[data-theme="dark"] .highlight {
+    background-color: #202124;
+    color: #e2ded6;
+    border-color: #454548;
+    box-shadow: 0 5px 14px rgba(0, 0, 0, .4), 0 0 12px rgba(0, 0, 0, .18) inset;
+}
+
+html[data-theme="dark"] pre > code {
+    border: none;
+}
+
+html[data-theme="dark"] .highlight .k,
+html[data-theme="dark"] .highlight .kc,
+html[data-theme="dark"] .highlight .kd,
+html[data-theme="dark"] .highlight .kp,
+html[data-theme="dark"] .highlight .kr,
+html[data-theme="dark"] .highlight .kt {
+    color: #a8bbcf;
+}
+
+html[data-theme="dark"] .highlight .s,
+html[data-theme="dark"] .highlight .sb,
+html[data-theme="dark"] .highlight .sc,
+html[data-theme="dark"] .highlight .sd,
+html[data-theme="dark"] .highlight .s1,
+html[data-theme="dark"] .highlight .s2 {
+    color: #d0b88e;
+}
+
+html[data-theme="dark"] .highlight .n,
+html[data-theme="dark"] .highlight .p,
+html[data-theme="dark"] .highlight .nb,
+html[data-theme="dark"] .highlight .nf,
+html[data-theme="dark"] .highlight .nx,
+html[data-theme="dark"] .highlight .w {
+    color: #ddd9d1;
+}
+
+html[data-theme="dark"] .highlight .m,
+html[data-theme="dark"] .highlight .mf,
+html[data-theme="dark"] .highlight .mi,
+html[data-theme="dark"] .highlight .mo {
+    color: #bba9c9;
+}
+
+html[data-theme="dark"] .highlight .o,
+html[data-theme="dark"] .highlight .ow,
+html[data-theme="dark"] .highlight .nt {
+    color: #c79da2;
+}
+
+html[data-theme="dark"] .highlight .c,
+html[data-theme="dark"] .highlight .c1,
+html[data-theme="dark"] .highlight .cm,
+html[data-theme="dark"] .highlight .cs {
+    color: #88877f;
 }

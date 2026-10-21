@@ -2,6 +2,9 @@
     <div class="wrapper">
         <a href="{{ site.baseurl }}/" class="brand">{{ site.title }}</a>
         <small>{{site.brief-intro}}</small>
+        <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch color theme" aria-pressed="false">
+            <i class="fa fa-moon-o" aria-hidden="true"></i>
+        </button>
         <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
         <nav id="headerNav">
             <ul>
@@ -14,20 +17,24 @@
                         <i class="fa fa-home"></i>Home
                     </a>
                 </li>
-
-                {% for my_page in site.pages %}
-                    {% if my_page.type == 'page' %}
+                {% assign nav_items = "archive|Archives|archive,category|Categories|th-list,tag|Tags|tags,search|Search|search,about|About|heart,privacy|Privacy|lock" | split: "," %}
+                {% for nav_item in nav_items %}
+                    {% assign item = nav_item | split: "|" %}
                     <li>
-                        {% if my_page.url == page.url %}
-                        <a class="active" href="{{ my_page.url | prepend: site.baseurl }}">
-                            {% else %}
-                        <a href="{{ my_page.url | prepend: site.baseurl }}">
+                        {% if page.url == item[0] or page.url == item[0] | append: "/" %}
+                        <a class="active" href="{{ item[0] | prepend: "/" | relative_url }}">
+                        {% else %}
+                        <a href="{{ item[0] | prepend: "/" | relative_url }}">
                         {% endif %}
-                            <i class="fa fa-{{my_page.icon}}"></i>{{ my_page.title }}
+                            <i class="fa fa-{{ item[2] }}"></i>{{ item[1] }}
                         </a>
                     </li>
-                    {% endif %}
                 {% endfor %}
+                <li>
+                    <a href="https://fauzymadani.vercel.app/" rel="noopener">
+                        <i class="fa fa-external-link"></i>Portfolio
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>

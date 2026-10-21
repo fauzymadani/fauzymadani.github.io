@@ -8,6 +8,30 @@
  * clickMenu
  */
 (function() {
+  var themeToggle = document.querySelector('#themeToggle')
+  var root = document.documentElement
+  var storedTheme = localStorage.getItem('theme')
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme)
+    themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false')
+    themeToggle.innerHTML = theme === 'dark'
+      ? '<i class="fa fa-sun-o" aria-hidden="true"></i>'
+      : '<i class="fa fa-moon-o" aria-hidden="true"></i>'
+  }
+
+  if (themeToggle !== null) {
+    var initialTheme = storedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    applyTheme(initialTheme)
+    themeToggle.addEventListener('click', function() {
+      var nextTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+      localStorage.setItem('theme', nextTheme)
+      applyTheme(nextTheme)
+    })
+  }
+}());
+
+(function() {
   if (window.innerWidth <= 770) {
     var menuBtn = document.querySelector('#headerMenu')
     var nav = document.querySelector('#headerNav')
@@ -72,5 +96,4 @@
     link.classList.add('protected-email-ready')
   }
 }());
-
 

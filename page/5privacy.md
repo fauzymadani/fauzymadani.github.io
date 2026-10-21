@@ -25,8 +25,10 @@ approach in its [privacy documentation](https://www.goatcounter.com/help/privacy
 Pages may load resources from external services, including:
 
 * Google Fonts for Source Sans 3 and JetBrains Mono.
-* Font Awesome and an icon stylesheet for interface icons.
+* cdnjs for Font Awesome interface icons.
+* jsDelivr for the client-side search library on the search page.
 * GoatCounter for privacy-focused, aggregate analytics.
+* MathJax from cdnjs on posts that explicitly enable mathematical notation.
 
 These services may receive a request containing your IP address and browser
 information as part of serving or processing the requested resource. The site
@@ -44,6 +46,13 @@ correspondence.
 
 Posts may link to external websites. Their privacy practices are separate from
 this site and are governed by their own policies.
+
+## Copyright
+
+Unless a post says otherwise, the site's original writing is available under
+the [Creative Commons Attribution-NonCommercial 4.0 International
+License](https://creativecommons.org/licenses/by-nc/4.0/). Please credit Fauzy
+Madani and link back to the original post when reusing it.
 
 ## Changes
 

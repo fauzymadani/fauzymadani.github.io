@@ -1,6 +1,45 @@
 #markdown-toc {
     display: none;
 }
+
+.page[post] .right .side.content {
+    border-left: 2px solid #d6dbdf;
+    padding-left: 14px;
+}
+
+.page[post] .right .side.content > div {
+    color: #555;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.page[post] .right #content-side {
+    border-left: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    margin: 0;
+    padding-left: 0;
+}
+
+.page[post] .right #content-side li {
+    list-style: none;
+    margin: 0;
+}
+
+.page[post] .right #content-side a {
+    background: transparent;
+    color: #777;
+    display: block;
+    padding: 3px 0;
+}
+
+.page[post] .right #content-side a:hover {
+    color: #223253;
+    padding-left: 3px;
+}
 .page[post] {
     .label {
         margin-top: 16px;
@@ -66,8 +105,14 @@
             h2 {
                 font-size: 24px;
             }
+
             h3 {
                 font-size: 20px;
+            }
+
+            html[data-theme="dark"] .page[post] .left ul > h2,
+            html[data-theme="dark"] .page[post] .left ul li {
+                color: #d8d6d1;
             }
             h4 {
                 font-size: 18px;

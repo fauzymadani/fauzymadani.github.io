@@ -4,9 +4,183 @@
     height: 0;
     clear: both;
 }
+
+html[data-theme="dark"] body {
+    background-color: #1a1b1e;
+    background-image: none;
+    color: #d8d6d1;
+}
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] h5,
+html[data-theme="dark"] h6,
+html[data-theme="dark"] .page .left,
+html[data-theme="dark"] .page .left ul li {
+    color: #d8d6d1;
+}
+
+html[data-theme="dark"] .page .left {
+    background-color: #25272b !important;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .5), 0 0 30px rgba(255, 255, 255, .025) inset;
+}
+
+html[data-theme="dark"] .page .right .side {
+    background-color: #25272b;
+    border-color: #3d4046;
+    color: #d8d6d1;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, .42), 0 0 18px rgba(255, 255, 255, .02) inset;
+}
+
+html[data-theme="dark"] .page .right .side > div {
+    color: #d8d6d1;
+}
+
+html[data-theme="dark"] .page .left a,
+html[data-theme="dark"] .page[post] a,
+html[data-theme="dark"] .page[index] a {
+    color: #aebdd0;
+}
+
+html[data-theme="dark"] .page .left hr,
+html[data-theme="dark"] .site-search #search-results li {
+    border-color: #3d4046;
+}
+
+html[data-theme="dark"] .site-search label,
+html[data-theme="dark"] .site-search #search-results p {
+    color: #aaa9a4;
+}
+
+html[data-theme="dark"] .site-search input {
+    background: #1a1b1e;
+    border-color: #55585e;
+    color: #e1dfda;
+}
+
+html[data-theme="dark"] .site-search #search-results span {
+    color: #c1bfb9;
+}
+
+html[data-theme="dark"] blockquote {
+    background: rgba(180, 165, 140, .09);
+    color: #d0cec8;
+    border-left-color: #756d61;
+}
+
+html[data-theme="dark"] h2 {
+    border-bottom-color: #3d4046;
+}
+
+html[data-theme="dark"] hr {
+    border-top-color: #3d4046;
+}
+
+html[data-theme="dark"] .page[post] .right .side.content {
+    border-left-color: #756d61;
+}
+
+html[data-theme="dark"] .page[post] .right .side.content > div,
+html[data-theme="dark"] .page[post] .right #content-side a {
+    color: #b6b3ac;
+}
+
+html[data-theme="dark"] .page[post] .left ul > h2,
+html[data-theme="dark"] .page[post] .left ul li {
+    color: #d8d6d1;
+}
+
+html[data-theme="dark"] .page[post] a:hover {
+    color: #d8c39f;
+    background-color: #30302f;
+}
+
+html[data-theme="dark"] table tbody tr:nth-of-type(2n+1) {
+    background-color: #2a2c30;
+}
+
+html[data-theme="dark"] table tbody tr:nth-of-type(2n) {
+    background-color: #303237;
+}
+
+html[data-theme="dark"] .page .left p,
+html[data-theme="dark"] .page .left li,
+html[data-theme="dark"] .page .left .title,
+html[data-theme="dark"] .page .left .categories {
+    color: #d8d6d1;
+}
+
+html[data-theme="light"] body {
+    background-color: #fff;
+    background-image: url(https://gw.alicdn.com/tfs/TB1xzbUumBYBeNjy0FeXXbnmFXa-125-121.png);
+    color: #333;
+}
 .clearfix {
     *zoom: 1;
 }
+
+.site-search {
+    max-width: 680px;
+
+    label {
+        color: #6a6b6b;
+        display: block;
+        font-size: 13px;
+        letter-spacing: .04em;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+    }
+
+    input {
+        background: #fff;
+        border: 1px solid #bbbfc4;
+        border-radius: 0;
+        box-sizing: border-box;
+        color: #333;
+        font-family: inherit;
+        font-size: 18px;
+        padding: 12px 14px;
+        width: 100%;
+    }
+
+    input:focus {
+        border-color: #4d6dad;
+        box-shadow: inset 3px 0 #4d6dad;
+        outline: none;
+    }
+
+    #search-results {
+        list-style: none;
+        margin: 18px 0 0;
+        padding: 0;
+
+        li {
+            border-bottom: 1px solid #e2e4e7;
+            padding: 13px 0 15px;
+        }
+
+        a {
+            color: #223253;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        p {
+            color: #888;
+            font-size: 13px;
+            margin: 3px 0;
+        }
+
+        span {
+            color: #555;
+            display: block;
+            line-height: 1.5;
+        }
+    }
+}
+
 .page {
     width: 1140px;
     box-sizing: border-box;
@@ -23,6 +197,7 @@
         >h1 {
             margin-bottom: -10px;
         }
+
         a:not([title]){
             word-break: break-all;
         }

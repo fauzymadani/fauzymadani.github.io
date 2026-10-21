@@ -1,0 +1,26 @@
+---
+layout: page
+title: Search
+permalink: /search/
+icon: search
+type: page
+---
+
+<div class="site-search">
+    <label for="search-input">Search posts</label>
+    <input id="search-input" type="search" placeholder="Try a title, topic, or keyword" autocomplete="off">
+    <ol id="search-results" aria-live="polite"></ol>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script>
+<script>
+SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('search-results'),
+    json: '{{ "/search.json" | relative_url }}',
+    searchResultTemplate: '<li><a href="{url}">{title}</a><p>{date} · {categories}</p><span>{description}</span></li>',
+    noResultsText: 'No matching posts found.',
+    limit: 20,
+    fuzzy: false
+})
+</script>

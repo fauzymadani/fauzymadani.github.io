@@ -23,8 +23,25 @@ header {
             margin-left: 26px;
             font-size: 14px;
         }
+        .theme-toggle {
+            background: transparent;
+            color: #9d9d9d;
+            cursor: pointer;
+            float: right;
+            font-size: 15px;
+            line-height: 52px;
+            margin-left: 12px;
+            padding: 0 8px;
+        }
+        .theme-toggle:hover {
+            color: #fff;
+        }
         .menu{
             display: none;
+        }
+        .theme-toggle {
+            line-height: 48px;
+            margin-right: 42px;
         }
         nav {
             float: right;

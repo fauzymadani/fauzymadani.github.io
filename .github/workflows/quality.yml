@@ -1,0 +1,25 @@
+name: Validate Jekyll site
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Check whitespace
+        run: git diff --check
+      - name: Build with strict front matter
+        run: bundle exec jekyll build --strict_front_matter
+      - name: Check Jekyll configuration
+        run: bundle exec jekyll doctor

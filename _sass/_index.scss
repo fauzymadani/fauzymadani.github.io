@@ -5,6 +5,7 @@
         &:hover {
             color: #223253;
         }
+
     }
     .left {
         >ul {
@@ -12,12 +13,18 @@
             >li {
                 list-style: none;
             }
+
             li {
                 color: #333;
                 h2 {
                     border: none;
                     font-size: 27px;
                     margin: 0;
+                }
+
+                html[data-theme="dark"] .page[index] .left p,
+                html[data-theme="dark"] .page[index] .left li {
+                    color: #d8d6d1;
                 }
                 .label {
                     margin-bottom: 15px;
