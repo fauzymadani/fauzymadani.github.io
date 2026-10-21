@@ -4,12 +4,18 @@ layout: default
 
 <div class="page clearfix" index>
     <div class="left">
-        <h1>Fauzy's Blog</h1>
-        <small>Notes on Emacs, Linux, games, and useful tools.</small>
+        <h1>Fauzy Madani's Blog</h1>
+        <small>Personal notes, observations, and things worth keeping.</small>
         <p class="last-build">Last build: {{ site.time | date: "%Y-%m-%d %H:%M %z" }}</p>
+        <p class="portfolio-note">
+            welcome to my site, this site is used to collect and preserve all of my technical blog/write up and maybe some academic stuff later.
+            For projects and professional work, visit
+            <a href="https://fauzymadani.vercel.app/" rel="noopener">my portfolio</a>.
+        </p>
         <hr>
         <ul>
             {% for post in paginator.posts %}
+              {% unless post.archived %}
               <li>
                 <h2>
                   <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
@@ -42,6 +48,7 @@ layout: default
                 </div>
                 <hr>
               </li>
+              {% endunless %}
             {% endfor %}
         </ul>
 

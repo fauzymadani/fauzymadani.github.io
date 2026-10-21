@@ -1,6 +1,6 @@
-title: Fauzy
-brief-intro: Notes on Emacs, Linux, and useful tools
-description: A personal blog about Emacs, Linux, games, and useful tools.
+title: Fauzy Madani
+brief-intro: Personal notes and observations
+description: The personal website of Fauzy Madani.
 baseurl: ""
 url: "https://fauzymadani.github.io"
 
@@ -10,8 +10,6 @@ github_username: fauzymadani
 email: fauzymadani3@gmail.com
 description_footer: Notes and experiments by Fauzy.
 
-disqus_shortname:
-duoshuo_shortname:
 google_analytics_id:
 baidu_tongji_id:
 

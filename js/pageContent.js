@@ -127,33 +127,55 @@ function setContentMaxHeight() {
 //-------------post Content----------------------
 //将Content内容转移
 function moveTOC() {
-    if (document.querySelector('#markdown-toc') !== null) {
-        var TOCString = document.querySelector('#markdown-toc').innerHTML
-        var contentUl = document.querySelector('#content-side')
-        contentUl.insertAdjacentHTML('afterbegin', TOCString) //插入字符串
+    var content = document.querySelector('.page[post] article')
+    var contentUl = document.querySelector('#content-side')
 
-        // if (!isAndroidWechatBrowser()) {
+    if (content === null || contentUl === null) {
+        return
+    }
 
-            //添加scroll样式，为了平滑滚动
-            //add class "scroll", for smooth scroll
-            var aTags = document.querySelectorAll('#content-side a')
+    var toc = document.querySelector('#markdown-toc')
+    if (toc !== null) {
+        contentUl.insertAdjacentHTML('afterbegin', toc.innerHTML)
+    } else {
+        var headings = content.querySelectorAll('h2, h3, h4')
+        for (var i = 0; i < headings.length; i++) {
+            var heading = headings[i]
+            var id = heading.id
 
-            //add class for everyone
-            // aTags.forEach(function () {
-            //     console.log(this);
-            // })
-            for (var i = 0; i < aTags.length; i++) {
-                // if (!aTags[i].classList.contains('scroll')) {
-                //     aTags[i].classList.add('scroll')
-                // }
-                if (!aTags[i].hasAttribute('data-scroll')) {
-                  aTags[i].setAttribute('data-scroll','');
-                }
+            if (!id) {
+                id = heading.textContent
+                    .toLowerCase()
+                    .replace(/[^a-z0-9\u00a0-\uffff]+/g, '-')
+                    .replace(/^-+|-+$/g, '')
+                heading.id = id || 'section-' + i
+            }
 
+            contentUl.insertAdjacentHTML(
+                'beforeend',
+                '<li><a data-scroll href="#' + encodeURIComponent(id) + '">' +
+                heading.textContent + '</a></li>'
+            )
+        }
+    }
+
+    // if (!isAndroidWechatBrowser()) {
+
+        //添加scroll样式，为了平滑滚动
+        //add class "scroll", for smooth scroll
+        var aTags = document.querySelectorAll('#content-side a')
+
+        //add class for everyone
+        // aTags.forEach(function () {
+        //     console.log(this);
+        // })
+        for (var j = 0; j < aTags.length; j++) {
+            if (!aTags[j].hasAttribute('data-scroll')) {
+              aTags[j].setAttribute('data-scroll','');
             }
         // }
-
     }
+    // }
 }
 
 /**
