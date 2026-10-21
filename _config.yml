@@ -12,6 +12,7 @@ description_footer: Notes and experiments by Fauzy.
 
 google_analytics_id:
 baidu_tongji_id:
+goatcounter: "https://fauzy.goatcounter.com/count"
 
 markdown: kramdown
 kramdown:
