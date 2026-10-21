@@ -1,55 +1,32 @@
 title: Fauzy
-description: A personal blog about Emacs, Linux, and other things.
-url: "https://fauzymadani.github.io"
+brief-intro: Notes on Emacs, Linux, and useful tools
+description: A personal blog about Emacs, Linux, games, and useful tools.
 baseurl: ""
+url: "https://fauzymadani.github.io"
 
-theme: jekyll-theme-chirpy
+permalink: /:year/:month/:day/:title/
 
-exclude:
-  - build.el
-  - build.sh
-  - content
-  - public
-  - vendor
-  - Gemfile
-  - Gemfile.lock
+github_username: fauzymadani
+email: fauzymadani3@gmail.com
+description_footer: Notes and experiments by Fauzy.
 
-lang: en
-timezone: Asia/Jakarta
-
-author:
-  name: Fauzy
-
-avatar: /assets/img/avatar.png
-
-github:
-  username: fauzymadani
-
-social:
-  name: Fauzy
-  email: fauzymadani3@gmail.com
-  links:
-    - https://github.com/fauzymadani
+disqus_shortname:
+duoshuo_shortname:
+google_analytics_id:
+baidu_tongji_id:
 
 markdown: kramdown
-highlighter: rouge
-paginate: 10
-paginate_path: /page/:num/
-permalink: /posts/:title/
-
 kramdown:
-  footnote_backlink: "&#8617;&#xfe0e;"
+  input: GFM
   syntax_highlighter: rouge
-  syntax_highlighter_opts:
-    css_class: highlight
-    span:
-      line_numbers: false
-    block:
-      line_numbers: true
 
-toc: true
-comments:
-  active: false
+category_dir: category/
+tag_dir: tag/
+excerpt_separator: "\n\n\n\n"
+
+paginate: 10
+plugins:
+  - jekyll-paginate
 
 defaults:
   - scope:
@@ -57,36 +34,10 @@ defaults:
       type: posts
     values:
       layout: post
-      toc: true
-      permalink: /posts/:title/
-      compress_html: false
-  - scope:
-      path: ""
-      type: tabs
-    values:
-      layout: page
-      permalink: /:title/
-      compress_html: false
 
-collections:
-  tabs:
-    output: true
-    sort_by: order
-
-jekyll-archives:
-  enabled: [categories, tags]
-  layouts:
-    category: category
-    tag: tag
-  permalinks:
-    category: /categories/:name/
-    tag: /tags/:name/
-
-plugins:
-  - jekyll-paginate
-  - jekyll-archives
-  - jekyll-include-cache
-  - jekyll-seo-tag
-  - jekyll-sitemap
-
-# Change `theme` above if you decide to try another Jekyll theme.
+exclude:
+  - build.el
+  - build.sh
+  - content
+  - public
+  - vendor
