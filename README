@@ -1,0 +1,155 @@
+  Built with mite: a small static site generator that renders mdoc(7)
+  manual pages to HTML with mandoc and glues them together with a
+  POSIX Makefile.  No node, no ruby, no bundler, no configuration
+  language.
+
+      mite .... https://git.sr.ht/~shrub900/mite
+      mandoc .. https://mandoc.bsd.lv/
+
+
+REQUIREMENTS
+
+    mandoc      renders every .1 source to HTML
+    make        drives the build (GNU or BSD make)
+    python3     only for `make serve` (local preview)
+
+  Arch Linux
+      $ sudo pacman -S mandoc make python
+
+  Debian / Ubuntu
+      $ sudo apt-get install mandoc make python3
+
+
+BUILD
+
+  SITE defaults to fauzymadani.github.io, so plain `make` is enough:
+
+      $ make
+      $ make SITE=fauzymadani.github.io
+
+  The whole site is written to out/<site>/, which is disposable:
+
+      $ make clean                  # rm -rf out/<site>
+
+  Nothing outside out/ is generated, so the repository only ever
+  holds sources.
+
+
+PREVIEW
+
+      $ make serve                  # build, then http://127.0.0.1:8000/
+      $ make serve PORT=8080
+
+  `make serve` builds first, then serves out/<site>/ with
+  python3 -m http.server.  Stop it with Ctrl-C.
+
+
+REPOSITORY LAYOUT
+
+    bin/helper                   the mite helper (raw/body/sidebar/page/serve)
+    Makefile                     build rules
+    README.txt                   this file
+    pub/style.css                layout + sidebar stylesheet
+    pub/mandoc.css               upstream mandoc stylesheet
+    sites/<site>/manifest.mk     site config: title, subtitle, dirs, targets
+    sites/<site>/mk/*.mk         per-page metadata (drives build + sidebar)
+    sites/<site>/<dir>/<page>.1  the actual content, as mdoc(7)
+    sites/<site>/_mite/          optional overrides: header.html, footer.html,
+                                 style.css, mandoc.css
+    out/<site>/                  build output (git-ignored)
+
+
+ADDING A PAGE
+
+  A page needs two files: an mdoc source and a metadata block.
+
+  1. Write the content, e.g. sites/<site>/words/my-post.1:
+
+        .Dd Nov 7, 2026
+        .Dt MY-POST 1
+        .Os fauzymadani.github.io
+        .Sh NAME
+        .Nm my-post
+        .Nd one line summary
+        .Sh DESCRIPTION
+        Body text goes here.
+        .Pp
+        Second paragraph.
+
+  2. Declare it in the matching mk file, e.g. sites/<site>/mk/words.mk:
+
+        PAGE := words/my-post
+        HTML_TARGETS := $(HTML_TARGETS) $(OUT_DIR)/$(PAGE).html
+
+        TITLE.$(PAGE) = my-post
+        OS.$(PAGE) = fauzymadani.github.io
+        URL.$(PAGE) := /$(PAGE).html
+
+        $(OUT_DIR)/words/my-post.html: $(SRC_DIR)/mk/words.mk
+        $(OUT_DIR)/words/my-post.raw.html: $(SRC_DIR)/words/my-post.1
+
+     PAGE is the path under out/ without the extension, TITLE.$(PAGE)
+     is the <title> and sidebar label, URL.$(PAGE) is the link target.
+
+  3. Run `make` and check the sidebar.  The nav tree is generated from
+     mk/*.mk, not from the filesystem, so a source without a PAGE
+     block builds nothing.
+
+  The index and 404 pages are deliberately hidden from the sidebar
+  (bin/helper, `sidebar` command).
+
+
+MDOC MACROS
+
+    .Sh NAME                            section header
+    .Nm name                            program/thing name
+    .Nd text                            one line description
+    .Pp                                 paragraph break
+    .Bl -bullet -compact / .It          bullet list
+    .Bl -tag -width "X" / .It Foo       tag list (Foo in left column)
+    .Bd -literal -offset indent / .Ed   literal / preformatted block
+    .Lk url "text"                      hyperlink
+
+
+STYLING
+
+  pub/style.css
+      Page layout, sidebar tree, responsive rules.  Typography is the
+      first block: --font-prose (Times New Roman for prose) and
+      --font-mono (literal blocks, code, diagrams).  pre is pinned to
+      --font-mono on purpose: mandoc.css sets `pre { font-family:
+      inherit }`, so ASCII art and unit files would lose their column
+      alignment if they inherited a proportional font.  This file is
+      linked after mandoc.css, so the overrides survive upstream
+      updates.
+
+  pub/mandoc.css
+      Upstream mandoc stylesheet.  Colours come from --bg/--fg;
+      pub/style.css pins it to dark mode and redefines those two
+      variables (#1E1F21 / #C5C8C6).  Near-white body text is too
+      harsh against Times New Roman, so the foreground is a muted grey
+      and the links are the desaturated #81A2BE / #B294BB.  The page is
+      dark regardless of the OS setting (`color-scheme: dark`, <meta
+      name="color-scheme">); drop the :root block to follow
+      prefers-color-scheme again.
+
+  sites/<site>/_mite/
+      Per-site overrides.  style.css there is appended to
+      pub/style.css; header.html replaces the default document head
+      (it uses @TITLE@, href="/mandoc.css" and href="/pub/style.css"
+      placeholders, which mite rewrites with a ?site= cache buster);
+      footer.html replaces the default closing tags.
+
+
+DEPLOY
+
+  .github/workflows/deploy.yml builds on every push to main and
+  publishes out/fauzymadani.github.io to GitHub Pages.
+
+  One-time setup in the repository:
+
+      Settings -> Pages -> Build and deployment source = GitHub Actions
+
+  .github/workflows/quality.yml runs the same build on pull requests
+  and fails if a source has no output or a page is missing from the
+  sidebar.

@@ -1,7 +1,0 @@
-#+TITLE: Hello World
-#+AUTHOR: fauzy
-#+DATE: 2026-08-17
-#+ARCHIVE: 1
-#+OPTIONS: toc:nil num:nil
-
-This blog is written in Org-mode and generated directly with =ox-publish=, with zero extra dependencies.

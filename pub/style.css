@@ -1,0 +1,168 @@
+/* Typography.
+ *
+ * mandoc.css sets `body { font-family: Helvetica,Arial,sans-serif }` and
+ * `pre { font-family: inherit }`.  Prose is switched to Times New Roman here;
+ * literal blocks, code and the monospaced semantic classes are pinned to a
+ * real monospace stack so ASCII diagrams, unit files and the randomart keep
+ * their column alignment (a proportional font would destroy them).
+ *
+ * This file is linked after mandoc.css, so equal-specificity rules win here
+ * and upstream mandoc.css can be updated without losing these overrides. */
+:root {
+    --font-prose: "Times New Roman", "Liberation Serif", "Tinos", Times, serif;
+    --font-mono: monospace;
+}
+
+body {
+    font-family: var(--font-prose);
+}
+
+pre,
+code,
+kbd,
+samp,
+tt,
+.Li,
+.Ev,
+.Dv,
+.Er {
+    font-family: var(--font-mono);
+}
+
+/* Dark mode, always — with a softer palette than mandoc.css ships.
+ *
+ * mandoc.css only flips `--bg`/`--fg` to #1E1F21/#EEEFF1 inside
+ * `@media (prefers-color-scheme: dark)`, and near-white on near-black is
+ * the worst case for long serif runs: Times New Roman hairlines bloom and
+ * the text glares.  The foreground is therefore a muted warm grey (~9:1
+ * contrast instead of ~17:1) and the links are desaturated instead of the
+ * pastel #BAD7FF/#F6BAFF.  `:root` outranks the bare `html` selector
+ * mandoc uses, so this wins in both schemes; the link colours have to be
+ * restated because that media block recolours them too. */
+:root {
+    color-scheme: dark;
+    --bg: #1E1F21;
+    --fg: #C5C8C6;
+}
+
+:link { color: #81A2BE; }
+:visited { color: #B294BB; }
+
+body {
+    display: flex;
+    min-height: 100vh;
+}
+
+.layout {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    flex: 0 0 16%;
+    padding: 20px;
+    align-self: flex-start;
+}
+
+.sidebar-title {
+    display: block;
+    border-bottom: 1px dotted #808080;
+    margin-bottom: 0.25em;
+    font-size: 110%;
+    font-weight: 700;
+}
+.sidebar-subtitle {
+    color: #8A8A8A;
+    font-size: 90%;
+    margin-bottom: 1em;
+}
+
+/* Plain page: no card, no border, no shadow.  The text sits directly on the
+   page background (body already paints var(--bg)), so nothing frames it. */
+.content {
+    flex: 0 0 74%;
+    min-width: 0;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Literal blocks (code, unit files, diagrams) may be wider than the
+   column.  Scroll them instead of letting them spill over the layout. */
+pre {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+/* Long unbreakable strings in prose (URLs, fingerprints) wrap. */
+.content p,
+.content li,
+.content dd {
+    overflow-wrap: break-word;
+}
+
+.side-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.side-tree,
+.side-tree ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+}
+.side-tree ul {
+    margin-left: 0.8em;
+}
+.side-tree summary {
+    cursor: pointer;
+    user-select: none;
+}
+.side-tree summary::marker {
+    color: #8A8A8A;
+}
+.side-tree .dir {
+    margin-top: 0.3em;
+}
+
+.side-nav li {
+    margin-top: 0.3em;
+}
+
+.side-nav .d1 { margin-left: 0.5em; }
+.side-nav .d2 { margin-left: 1em; }
+.side-nav .d3 { margin-left: 1.5em; }
+.side-nav .d4 { margin-left: 2em; }
+
+.side-nav a {
+    text-decoration: none;
+}
+
+.side-nav a.thisPage {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.sidebar-powered {
+    margin-top: 1.25em;
+    padding-top: 0.75em;
+    border-top: 1px dotted #808080;
+    color: #8A8A8A;
+    font-size: 90%;
+}
+
+@media (max-width: 900px) {
+    body, .layout {
+        flex-direction: column;
+    }
+
+    .sidebar,
+    .content {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    .content {
+        margin-bottom: 0;
+    }
+}

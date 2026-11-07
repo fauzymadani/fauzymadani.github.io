@@ -1,9 +1,5 @@
-public/
-.org-timestamps/
+out/
+.bin/
+mandoc-*/
+.idea/
 *~
-_site/
-.jekyll-cache/
-.jekyll-metadata
-.bundle/
-vendor/bundle/
-content/fonts/Charis-webfont-example.html

@@ -1,0 +1,308 @@
+#!/bin/sh
+set -eu
+#helper script for mite.
+cmd="${1:-}"
+shift || true
+
+case "$cmd" in
+raw)
+	src_dir="$1"
+	rel="$2"
+	out="$3"
+	src=""
+	for sec in 1 2 3 3p 4 5 6 7 8 9 mdoc; do
+		cand="$src_dir/$rel.$sec"
+		if [ -f "$cand" ]; then
+			src="$cand"
+			break
+		fi
+	done
+	if [ -z "$src" ]; then
+		echo "helper raw: no source for $rel under $src_dir" >&2
+		exit 1
+	fi
+	mandoc -T html -O style=mandoc.css "$src" > "$out"
+	;;
+body)
+	in="$1"
+	out="$2"
+	# extract and normalize only the rendered body from mandocs output
+	# this strips mandocs header and footer tables because we do our own
+	awk '
+		function lower(s) { return tolower(s) }
+		function decode_html_entities(s) {
+			gsub(/&lt;/, "<", s)
+			gsub(/&gt;/, ">", s)
+			gsub(/&quot;/, "\"", s)
+			gsub(/&amp;/, "&", s)
+			return s
+		}
+		function resetblock() {
+			in_literal_div = 0
+			in_pre = 0
+			lit_n = 0
+			pre_n = 0
+		}
+		function push_litline(s) { lit[++lit_n] = s }
+		function push_preline(s) { pre[++pre_n] = s }
+		function flushblock(    i, line, non_empty, all_htmlish) {
+			# if it looks like an html and quacks like an html...
+			non_empty = 0
+			all_htmlish = 1
+			for (i = 1; i <= pre_n; i++) {
+				line = pre[i]
+				if (line ~ /^[[:space:]]*$/) continue
+				non_empty++
+				if (line !~ /^[[:space:]]*&lt;.*&gt;[[:space:]]*$/) all_htmlish = 0
+			}
+			if (non_empty > 0 && all_htmlish) {
+				for (i = 1; i <= pre_n; i++) print decode_html_entities(pre[i])
+			} else {
+				for (i = 1; i <= lit_n; i++) print lit[i]
+			}
+			resetblock()
+		}
+		BEGIN {
+			in_body = 0
+			skip_table = 0
+			resetblock()
+		}
+		{
+			line = $0
+			lc = lower(line)
+
+			if (!in_body) {
+				if (lc ~ /<body[^>]*>/) {
+					in_body = 1
+					sub(/^.*<body[^>]*>/, "", line)
+					if (length(line)) $0 = line
+					else next
+				} else next
+			}
+
+			if (in_body && lc ~ /<\/body>/) {
+				sub(/<\/body>.*/, "", line)
+				if (in_literal_div) {
+					if (length(line)) push_litline(line)
+					flushblock()
+				} else if (length(line)) print line
+				in_body = 0
+				next
+			}
+
+			if (in_literal_div) {
+				push_litline(line)
+				if (!in_pre && lc ~ /<pre>/) {
+					in_pre = 1
+					line_after_pre = line
+					sub(/^.*<pre>/, "", line_after_pre)
+					if (length(line_after_pre)) push_preline(line_after_pre)
+					next
+				}
+				if (in_pre && lc ~ /<\/pre>/) {
+					line_before_pre_end = line
+					sub(/<\/pre>.*/, "", line_before_pre_end)
+					if (length(line_before_pre_end)) push_preline(line_before_pre_end)
+					in_pre = 0
+				} else if (in_pre) push_preline(line)
+				if (lc ~ /<\/div>/) flushblock()
+				next
+			}
+
+			if (lc ~ /<table class="head">/ || lc ~ /<table class="foot">/) {
+				skip_table = 1
+				next
+			}
+			if (skip_table) {
+				if (lc ~ /<\/table>/) skip_table = 0
+				next
+			}
+
+			if (lc ~ /<div class="bd[^"]*li[^"]*">/) {
+				in_literal_div = 1
+				push_litline(line)
+				if (lc ~ /<pre>/) in_pre = 1
+				next
+			}
+
+			print line
+		}
+		END {
+			if (in_literal_div) flushblock()
+		}
+	' "$in" > "$out"
+	;;
+sidebar)
+	out="$1"
+	src_dir="$2"
+	{
+		echo '<ul class="side-nav side-tree">'
+		# parse the page metadata from mk/*.mk and emit rows
+		# path|url|title-label
+		awk '
+			function flush() {
+				if (page != "" && title != "" && url != "") {
+					if (page == "index" || page == "404") return
+					u = url
+					gsub(/\$\(PAGE\)/, page, u)
+					printf "%s|%s|%s\n", page, u, title
+				}
+			}
+			FNR==1 {
+				if (NR > 1) flush()
+				page=""; title=""; url=""
+			}
+			# one mk file may declare several pages, so flush the previous
+			# block whenever a new PAGE line shows up
+			/^PAGE := / { flush(); page=substr($0, 9); title=""; url="" }
+			/^TITLE\.\$\(PAGE\) = / { title=substr($0, 17) }
+			/^URL\.\$\(PAGE\) := / { url=substr($0, 16) }
+			END { flush() }
+		' "$src_dir"/mk/*.mk \
+		| sort \
+		| awk -F'|' '
+			# build the dir tree
+			function close_to(n,    i) {
+				for (i = level; i > n; i--) {
+					print "</ul></details></li>"
+				}
+				level = n
+			}
+			BEGIN { level = 0 }
+			{
+				path=$1; url=$2; title=$3
+				n = split(path, p, "/")
+				dirs = n - 1
+				common = 0
+				for (i = 1; i <= dirs && i <= level; i++) {
+					if (p[i] == dstack[i]) common = i
+					else break
+				}
+				close_to(common)
+				for (i = common + 1; i <= dirs; i++) {
+					dstack[i] = p[i]
+					dirpath = p[1]
+					for (j = 2; j <= i; j++) dirpath = dirpath "/" p[j]
+					printf "<li class=\"dir\"><details data-dir=\"%s\"><summary>%s/</summary><ul>\n", dirpath, p[i]
+				}
+				level = dirs
+				printf "<li class=\"page\"><a href=\"%s\">&rsaquo; %s</a></li>\n", url, title
+			}
+			END { close_to(0) }
+		'
+		echo '</ul>'
+	} > "$out"
+	;;
+page)
+	out="$1"
+	rel="$2"
+	title="$3"
+	os="$4"
+	url="$5"
+	label="$6"
+	out_dir="$7"
+	site_title="$8"
+	site_subtitle="${9:-}"
+	home_url="${10:-}"
+	src_dir="${11:-}"
+	[ -n "$home_url" ] || home_url="/index.html"
+	raw="$out_dir/$rel.raw.html"
+	site_id="$(basename "$out_dir")"
+	style_href="/pub/style.css?site=$site_id"
+	mandoc_href="/mandoc.css?site=$site_id"
+	# get label from source filename extension, example.1 -> example(1)
+	label="$title"
+	if [ -n "$src_dir" ]; then
+		src=""
+		for sec in 1 2 3 3p 4 5 6 7 8 9 mdoc; do
+			cand="$src_dir/$rel.$sec"
+			if [ -f "$cand" ]; then
+				src="$cand"
+				break
+			fi
+		done
+		if [ -n "$src" ]; then
+			base="$(basename "$src")"
+			name="${base%.*}"
+			sec="${base##*.}"
+			label="${name}(${sec})"
+		fi
+	fi
+	date_dd="$(awk 'match($0, /<td class="foot-date">[^<]*<\/td>/){v=substr($0, RSTART, RLENGTH); gsub(/<[^>]*>/, "", v); print v; exit}' "$raw")"
+	if [ -z "$date_dd" ]; then
+		# do current date if none
+		date_dd="$(LC_ALL=C date -u '+%B %e, %Y' | awk '{$1=$1; print}')"
+	fi
+
+	{
+		if [ -f "$src_dir/_mite/header.html" ]; then
+			awk -v t="$title" -v s="$style_href" -v m="$mandoc_href" '{
+				gsub(/@TITLE@/, t)
+				gsub(/href="\/pub\/style\.css"/, "href=\"" s "\"")
+				gsub(/href="\/mandoc\.css"/, "href=\"" m "\"")
+				print
+			}' "$src_dir/_mite/header.html"
+		else
+			printf '<!doctype html>\n<html>\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>%s</title>\n<link rel="stylesheet" href="%s">\n<link rel="stylesheet" href="%s">\n</head>\n<body>\n' "$title" "$mandoc_href" "$style_href"
+		fi
+
+		echo '<div class="layout">'
+		echo '<aside class="sidebar">'
+		printf '<div class="sidebar-title"><a href="%s">%s</a></div>\n' "$home_url" "$site_title"
+		if [ -n "$site_subtitle" ]; then
+			printf '<div class="sidebar-subtitle">%s</div>\n' "$site_subtitle"
+		fi
+		# for some current page link open only the ancestor <details>
+		# before i had some js to do this and it had one or two extra things it could do,
+		# like opening multiple dirs at once and keeping the open ones open, but this
+		# is probably better, because js bad or smth. (thanks sewn)
+		awk -v cur="$url" '
+			{
+				line = $0
+				if (index(line, "href=\"" cur "\"") > 0) sub(/<a /, "<a class=\"thisPage\" ", line)
+				lines[++n] = line
+				if (line ~ /<details[^>]*data-dir=/) stack[++sp] = n
+				if (line ~ /class="thisPage"/) {
+					for (i = 1; i <= sp; i++) keep_open[stack[i]] = 1
+				}
+				if (line ~ /<\/ul><\/details><\/li>/ && sp > 0) sp--
+			}
+			END {
+				for (i = 1; i <= n; i++) {
+					line = lines[i]
+					if (keep_open[i] && line ~ /<details/ && line !~ /<details[^>]* open([[:space:]]|>)/) {
+						sub(/<details/, "<details open", line)
+					}
+					print line
+				}
+			}
+		' "$out_dir/sidebar.html"
+		echo '<div class="sidebar-powered"><a href="https://git.sr.ht/~shrub900/mite">powered by mite</a></div>'
+		echo '</aside>'
+		echo '<main class="content">'
+		printf '<div class="head" role="doc-pageheader" aria-label="Manual header line"><span class="head-ltitle">%s</span> <span class="head-vol">%s</span> <span class="head-rtitle">%s</span></div>\n' "$label" "$title" "$label"
+		cat "$out_dir/$rel.body.html"
+		printf '<div class="foot" role="doc-pagefooter" aria-label="Manual footer line"><span class="foot-left"></span><span class="foot-date">%s</span> <span class="foot-os foot-right">%s</span></div>\n' "$date_dd" "$os"
+		echo '</main>'
+		echo '</div>'
+
+		if [ -f "$src_dir/_mite/footer.html" ]; then
+			cat "$src_dir/_mite/footer.html"
+		else
+			printf '</body>\n</html>\n'
+		fi
+	} > "$out"
+	;;
+serve)
+	out_dir="$1"
+	port="${2:-8000}"
+	cd "$out_dir"
+	echo "serve: http://127.0.0.1:$port/"
+	#you need python, duh. this is really just for quick local preview
+	python3 -m http.server "$port"
+	;;
+*)
+	echo "usage: $0 {raw|body|sidebar|page|serve} ..." >&2
+	exit 1
+	;;
+esac

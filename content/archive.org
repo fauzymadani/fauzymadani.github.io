@@ -1,7 +1,0 @@
-#+TITLE: Archive
-
-List of archived post.
-
-#+BEGIN_EXPORT html
-<div id="archive-list"></div>
-#+END_EXPORT

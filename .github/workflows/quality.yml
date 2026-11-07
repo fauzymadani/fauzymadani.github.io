@@ -1,4 +1,4 @@
-name: Validate Jekyll site
+name: Validate mite site
 
 on:
   pull_request:
@@ -9,17 +9,46 @@ permissions:
   contents: read
 
 jobs:
-  validate:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.3"
-          bundler-cache: true
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Install mandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mandoc
+
       - name: Check whitespace
         run: git diff --check
-      - name: Build with strict front matter
-        run: bundle exec jekyll build --strict_front_matter
-      - name: Check Jekyll configuration
-        run: bundle exec jekyll doctor
+
+      - name: Build site with mite
+        run: make SITE=fauzymadani.github.io
+
+      - name: Verify every page was generated
+        run: |
+          set -eu
+          out=out/fauzymadani.github.io
+          test -s "$out/index.html"
+          test -s "$out/404.html"
+          test -s "$out/sidebar.html"
+          test -s "$out/mandoc.css"
+          test -s "$out/pub/style.css"
+          # every mandoc(7) source must produce a rendered page
+          find sites -name '*.1' -type f | while read -r src; do
+            page="${src#sites/*/}"
+            page="${page%.1}"
+            test -s "$out/$page.html" || { echo "no output for $page" >&2; exit 1; }
+          done
+
+      - name: Verify every page is reachable from the sidebar
+        run: |
+          set -eu
+          out=out/fauzymadani.github.io
+          grep -h '^PAGE := ' sites/*/mk/*.mk | sed 's/^PAGE := //' |
+          grep -v -e '^index$' -e '^404$' |
+          while read -r page; do
+            grep -q "/$page.html" "$out/sidebar.html" ||
+              { echo "page missing from sidebar: $page" >&2; exit 1; }
+          done

@@ -1,0 +1,42 @@
+.Dd Aug 22, 2026
+.Dt GWX 1
+.Os fauzymadani.github.io
+.Sh How I Installed GWX Knight's Cross Edition on Arch Linux
+.Pp
+I love war games, especially those about World War 2 with historical weapons or machinery. I am fond of submarine simulator games with good mechanics and do not care much about graphics.
+.Pp
+I managed to run the game with Steam using Proton. Later I discovered the megamod for Silent Hunter 3 called
+.Lk https://thegreywolves.com/ "GWX - Knight's Cross Edition"
+a successor to the Grey Wolves eXpansion.
+.Pp
+I researched how to install it, joined their Discord server, and found someone explaining the process. I started by preparing all the necessary resources.
+.Sh Installing Necessary Resources
+.Pp
+Install the launcher from the AUR:
+.Bd -literal -offset indent
+$ yay -S --noconfirm faugus-launcher
+.Ed
+.Pp
+After installing the launcher, download the megamod files from MediaFire and install 7zip.
+.Pp
+Remember to run the original Silent Hunter 3 from Steam once before doing anything else.
+.Sh Putting It Together
+.Pp
+Create a main entry in the launcher:
+.Bl -enum
+.It
+Open the launcher and create a new entry.
+.It
+Fill in any title.
+.It
+Enter the path: /home/user/Games/GWX-KnightsCross/sh3.exe.
+.It
+Use the Steam prefix: /home/user/Faugus/gwx---knights-cross-edition.
+.It
+Choose GE-Proton-Latest.
+.El
+.Pp
+Create similar entries for HsieOptionsSelector.exe and MultiSH3.exe, using the same prefix and Proton version. Finally create an entry for SH3 Commander/SH3Cmdr.exe.
+.Sh Conclusion
+.Pp
+Run SH3 Commander when you want to play and manage career entries. Buy the original game on Steam first, and keep this megamod in a separate directory rather than merging it with the Steam installation.

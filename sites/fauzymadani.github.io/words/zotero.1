@@ -1,0 +1,114 @@
+.Dd Sep 30, 2026
+.Dt ZOTERO 1
+.Os fauzymadani.github.io
+.Sh Automated Academic Reference Workflow
+.Pp
+Managing academic literature quickly becomes a mess when dealing with limited local storage, multi-device synchronization, and manual citation workflows. Default setups often force you to pay for extra Zotero storage or manually move PDF attachments around, creating unnecessary friction during writing sessions.
+.Pp
+I wanted a frictionless, automated setup on Arch Linux that seamlessly handles my reading materials, reference database, and disaster recovery. The primary goals were to offload paper PDFs automatically to Google Drive without filling up local storage permanently, keep Zotero metadata synced freely as local linked attachments, continuously export an updated citation library for editors like Neovim or Emacs Org-mode, and automate lightweight database backups without relying on heavy cloud client bloat.
+.Pp
+Here is how to set up an end-to-end automated academic workflow using Zotero, Rclone, Attanger, Better BibTeX, and systemd user services.
+.Sh 1. Prerequisites and Package Installation
+.Pp
+Before setting up the automated mounts, backups, and plugins, install the necessary packages on Arch Linux using pacman. We need rclone for cloud interaction and fuse3 to allow mounting cloud filesystems in user space.
+.Bd -literal -offset indent
+$ sudo pacman -S rclone fuse3 aur/zotero-bin
+.Ed
+.Pp
+Next, create the local directory mount point and the systemd user configuration directory if they do not already exist:
+.Bd -literal -offset indent
+$ mkdir -p ~/GoogleDrive
+$ mkdir -p ~/.config/systemd/user
+.Ed
+.Sh 2. Cloud Storage Mounting with Rclone
+.Pp
+The foundation of this architecture relies on bidirectionally mounting Google Drive to a local directory using Rclone with FUSE caching. This ensures that the operating system treats the remote cloud directory as a standard local folder while keeping local disk usage minimal.
+.Pp
+First, configure your remote by running rclone config in your terminal and following the interactive setup for Google Drive, naming the remote gdrive. Once authorized, automate its execution using a systemd user service so it mounts seamlessly on system boot without root privileges.
+.Pp
+Create the service file at ~/.config/systemd/user/rclone-gdrive.service:
+.Bd -literal -offset indent
+[Unit]
+Description=Rclone Google Drive Mount
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/rclone mount gdrive:Zotero_PDFs %h/GoogleDrive \\
+  --vfs-cache-mode full \\
+  --vfs-cache-max-size 2G \\
+  --vfs-read-chunk-size 8M \\
+  --vfs-read-chunk-size-limit 64M \\
+  --dir-cache-time 24h \\
+  --attr-timeout 10m
+ExecStop=/usr/bin/fusermount -u %h/GoogleDrive
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=default.target
+.Ed
+.Pp
+Enable and start the background service using systemctl --user enable --now rclone-gdrive.service.
+.Pp
+The key configuration parameters here are --vfs-cache-mode full combined with --vfs-cache-max-size 2G. This allows files to be cached locally for instant reading and background uploading, while strictly capping local cache size. The directory cache settings drastically reduce network overhead, making directory listings via terminal or file managers feel virtually instantaneous.
+.Sh 3. Attachment Automation via Zotero Attanger
+.Pp
+Standard Zotero stores attachments internally inside ~/Zotero/storage, which quickly exhausts Zotero's default cloud storage quota and duplicates local files. To bypass this, we use the Attanger plugin to intercept newly saved attachments and automatically convert them into linked files pointing to our mounted Google Drive folder.
+.Pp
+Download the latest .xpi release from the Zotero Attanger GitHub repository. Inside Zotero, navigate to Tools > Plugins, click the gear icon, select Install Plugin From File..., and choose the downloaded file.
+.Pp
+To configure Attanger, open Zotero Settings and navigate to the Attanger section. Set the Attach file option under Attach Type to Link. Under Destination Path, select /home/yzuaf/GoogleDrive. You can leave the Subfolder field blank or set {{collection}} if you want Attanger to mirror your Zotero collection hierarchy automatically in Google Drive.
+.Sh 4. Real-Time Citation Key Export with Better BibTeX
+.Pp
+For writing papers in plain text editors or cloud platforms like Overleaf, manually updating BibTeX keys is error-prone. Better BibTeX (BBT) generates consistent citation keys and exports the bibliography in real time whenever changes occur.
+.Pp
+After installing the Better BibTeX .xpi plugin, open Edit > Settings > Better BibTeX. Set the Citation key formula field to:
+.Bd -literal -offset indent
+auth.lower + year + shorttitle.lower
+.Ed
+.Pp
+This constructs readable keys like siau2020artificial or vaswani2017attention. To finalize, right-click My Library in Zotero, select Export Library..., set the format to Better BibTeX, and enable Keep updated and Background export. Save the target file to /home/yzuaf/GoogleDrive/references.bib.
+.Sh 5. Automated Database Backup via Systemd User Timers
+.Pp
+While PDFs are safely stored in Google Drive via rclone mount, your Zotero database (zotero.sqlite) contains all collections, tags, notes, and metadata. To guarantee zero data loss without slowing down performance or hitting API rate limits with hundreds of tiny plugin scripts (translators/ and styles/), we set up an ultra-lightweight systemd user timer.
+.Pp
+Create ~/.config/systemd/user/zotero-backup.service:
+.Bd -literal -offset indent
+[Unit]
+Description=Automated Zotero Database Backup via Rclone
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rclone sync %h/Zotero gdrive:Zotero_Data_Backup \\
+  --exclude "storage/**" \\
+  --exclude "translators/**" \\
+  --exclude "styles/**" \\
+  --exclude "*.sqlite-wal" \\
+  --exclude "*.sqlite.tmp-wal" \\
+  --exclude "*.bak" \\
+  --delete-excluded
+.Ed
+.Pp
+Create ~/.config/systemd/user/zotero-backup.timer to run every 2 days at 16:00:
+.Bd -literal -offset indent
+[Unit]
+Description=Run Zotero Backup Every 2 Days at 4 PM
+
+[Timer]
+OnCalendar=*-*-1/2 16:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+.Ed
+.Pp
+Enable and activate the timer:
+.Bd -literal -offset indent
+$ systemctl --user daemon-reload
+$ systemctl --user enable --now zotero-backup.timer
+.Ed
+.Sh Conclusion
+.Pp
+With this environment fully established, capturing research materials becomes effortless. Clicking the Zotero Connector extension extracts metadata into Zotero while Attanger routes PDF attachments to your Rclone mount. Better BibTeX instantly updates your central .bib file, and an automated background systemd timer keeps your SQLite reference database safely backed up to Google Drive every two days with zero system overhead.
