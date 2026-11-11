@@ -100,6 +100,15 @@ pre {
     overflow-wrap: break-word;
 }
 
+/* mandoc renders `\-` as a plain hyphen in HTML, so the non-breaking
+   property is lost and the browser may split inline code after it
+   ("-debug" broken across two lines).  The longest inline code string
+   on the site is 28 characters, so keeping them whole cannot overflow
+   the narrowest column. */
+.content code {
+    white-space: nowrap;
+}
+
 .side-nav {
     list-style: none;
     margin: 0;
@@ -160,6 +169,10 @@ pre {
     .content {
         flex: 0 0 auto;
         width: 100%;
+        /* `.content` keeps its 20px side padding, so content-box sizing
+           would make it 40px wider than the viewport and clip every line
+           at the right edge. */
+        box-sizing: border-box;
     }
 
     .content {

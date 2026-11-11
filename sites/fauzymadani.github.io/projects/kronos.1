@@ -1,0 +1,227 @@
+.Dd Nov 11, 2026
+.Dt KRONOS 1
+.Os fauzymadani.github.io
+.Sh NAME
+.Nm kronos
+.Nd offline timetable, task, and exam manager for Android
+.Sh SYNOPSIS
+.Nm
+.Sh DESCRIPTION
+.Nm
+is a private, offline\-first Android application that keeps a class
+timetable, assignments, and exams in one place.
+There is no account, backend, or network permission; everything is stored in a
+local SQLite database on the device.
+The application id is
+.Ql io.github.fauzymadani.kronos .
+Debug builds append
+.Ql .debug
+to the id and carry a
+.Ql \-debug
+version suffix, so a debug and a release build install side by side.
+.Pp
+Devices must run Android 8.0 (API 26) or newer.
+The app compiles against API 36.1 and targets API 35, and uses flat native
+views rather than a declarative toolkit in order to stay responsive on
+low\-end hardware.
+.Sh FEATURES
+.Ss Subjects
+Subjects are created once, with an optional code and color, and are referenced
+by timetable entries, tasks, and exams.
+Subject names are unique and compared case\-insensitively after trimming.
+.Ss Timetable
+Class sessions carry a subject, day of week, start and end time, room,
+teacher, and week number.
+The timetable repeats over a rotation cycle of one to four weeks, anchored to
+the semester start date, so an odd and an even week can hold different
+sessions in the same slot.
+Sessions can be created quickly from configured class periods, which are
+named start and end time pairs edited in Settings.
+Views are available per week, per day, and per month.
+.Ss Tasks
+Tasks carry a title, due date, optional due time, priority, category, notes,
+lead time, and completion status.
+Completed tasks keep a completion timestamp rather than being deleted.
+Assignment type distinguishes homework from other work.
+.Ss Exams
+Exams carry a subject, date, start and end time, room, seat, and notes.
+They are shown in a month calendar with per\-day cells, and optionally inside
+the timetable day view.
+.Ss Reminders
+Class, task, and exam reminders are delivered through the Android
+.Ql AlarmManager
+with notification channels, and require notification permission on the device.
+Only the next relevant boundary is scheduled; nothing polls in the background.
+Pending alarms are rebuilt after boot, a time change, or a timezone change.
+.Ss Home screen widget
+A timetable widget shows the current or next classes.
+It never polls: the update period is zero, and it refreshes when data changes
+or when the next class boundary passes.
+.Ss Backup, restore, and CSV export
+Backup writes a JSON file containing subjects, sessions, tasks, categories,
+exams, holidays, and settings, and restoring replaces local data from that file.
+The accent color is deliberately excluded, because a backup brought to another
+phone should not repaint that phone.
+Timetable data can also be exported as CSV for use elsewhere.
+.Ss Appearance
+The interface supports light, dark, battery\-saving automatic, and pure black
+modes, seven accent colors, twelve and twenty\-four hour time formats, and a
+Monday or Sunday week start.
+The user interface is English and Indonesian.
+.Sh SETTINGS
+Settings are kept in shared preferences and are reachable from the Settings
+screen, which has a back arrow returning to the previous screen.
+.Bl -tag -width Ds
+.It Cm theme_mode
+One of
+.Ql light ,
+.Ql dark ,
+or
+.Ql auto_battery ,
+the last following the system battery saver.
+.It Cm pure_black
+Use an absolute black background in dark mode, for OLED panels.
+.It Cm accent_color
+One of the built\-in accent swatches; device-local and not exported.
+.It Cm time_format
+.Ql 24
+or
+.Ql 12 .
+.It Cm first_day_of_week
+.Ql monday
+or
+.Ql sunday .
+.It Cm rotation_length
+Rotation cycle in weeks, one to four.
+.It Cm semester_start
+Anchor date for week numbering.
+.It Cm class_periods
+Named period start and end times, used as presets in the class editor.
+.It Cm default_reminder_offset
+Default reminder lead time in minutes.
+.It Cm class_reminders , task_reminders , exam_reminders
+Per\-category reminder switches.
+.It Cm exam_day_before , exam_hour_before
+Optional early exam warnings.
+.It Cm exam_reminder_hour
+Time of day at which the day\-before exam warning fires.
+.It Cm day_view_exams
+Show exams inside the timetable day view.
+.El
+.Sh ENVIRONMENT
+.Bl -tag -width Ds
+.It Ev ANDROID_HOME , Ev ANDROID_SDK_ROOT
+Android SDK location.
+Either one takes precedence over
+.Pa local.properties .
+.It Ev BUILD_TOOLS
+Overrides the automatically detected build\-tools version for
+.Ql make apk\-info .
+.It Ev AVD
+Emulator name for
+.Ql make boot ;
+defaults to the first available emulator.
+.It Ev JAVA_HOME
+JDK 17, required to build.
+.El
+.Sh FILES
+.Bl -tag -width Ds
+.It Pa /data/data/io.github.fauzymadani.kronos/databases/kronos.db
+Room database, the single source of truth for application data.
+The schema is at version 10; versions 1 through 10 are upgraded by explicit
+migrations and there is no destructive fallback, so an older build cannot open
+a newer database.
+.It Pa /data/data/io.github.fauzymadani.kronos/shared_prefs/kronos_settings.xml
+Preferences described under
+.Sx SETTINGS .
+.It Pa app/schemas
+Exported Room schemas, committed so migrations can be reviewed and tested.
+.It Pa app/src/main/res/raw/license.txt
+License text shown in the About dialog.
+.It Pa keystore.properties
+Signing material for the release build.
+When absent, the release build falls back to the debug signing configuration.
+Never committed.
+.It Pa local.properties
+Local SDK location, generated by the IDE and never committed.
+When
+.Ev ANDROID_HOME
+is unset, the
+.Pa Makefile
+reads the SDK path from this file.
+.El
+.Sh EXAMPLES
+Build and run a debug build, which includes LeakCanary and is not minified:
+.Bd -literal -offset indent
+make build
+make install
+make logcat
+.Ed
+.Pp
+Run the unit tests:
+.Bd -literal -offset indent
+make test
+.Ed
+.Pp
+Build a minified release and update an existing install in place.
+.Ql adb install \-r
+keeps application data, and the version code must not decrease:
+.Bd -literal -offset indent
+make install\-release
+.Ed
+.Pp
+Confirm the version in the installed package and in the built artifact:
+.Bd -literal -offset indent
+make version
+make apk\-info
+.Ed
+.Pp
+Read this manual from the repository:
+.Bd -literal -offset indent
+man \-l kronos.1
+.Ed
+.Pp
+Install it for
+.Ql man kronos :
+.Bd -literal -offset indent
+install \-m 644 kronos.1 /usr/local/share/man/man1/
+.Ed
+.Sh DIAGNOSTICS
+.Ql make logcat
+follows logcat for the application process, and
+.Ql make crash
+prints the crash buffer.
+.Ql make version
+prints the installed version, and
+.Ql make apk\-info
+prints the version and signing certificate of the built release APK.
+.Pp
+Debug builds include LeakCanary.
+Reports pointing at
+.Ql DecorView
+or
+.Ql InputMethodManager
+originate inside the library rather than in application code.
+.Sh COMPATIBILITY
+Android 8.0 (API 26) and newer, with the interface localised in English and
+Indonesian.
+Release builds are minified and resource\-shrunk by R8; an update that behaves
+differently from a debug build points at
+.Pa app/proguard-rules.pro .
+.Sh AUTHORS
+.An fauzy madani
+.Pp
+.Lk https://github.com/fauzymadani "Kronos on GitHub"
+.Pp
+Licensed under GPL\-3.0; third\-party libraries retain their own licenses, and
+the bundled notification sound is CC0 1.0 Universal.
+.Sh CAVEATS
+There is no synchronisation between devices; transfer data with backup and
+restore.
+Data is only as safe as the backups you take, and exported backups contain
+personal timetable data in plain text.
+Reminder delivery depends on the device permitting alarms, so aggressive
+battery optimisation can delay or suppress notifications.
+Widget updates depend on the launcher honouring
+.Ql RemoteViews
+refreshes and on data actually changing or a class boundary passing.

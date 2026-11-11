@@ -4,6 +4,7 @@ SITE_SUBTITLE = backend & cloud engineering
 DIRS = \
 	$(OUT_DIR) \
 	$(OUT_DIR)/misc \
+	$(OUT_DIR)/projects \
 	$(OUT_DIR)/words
 
 HTML_TARGETS =
