@@ -29,24 +29,48 @@ tt,
     font-family: var(--font-mono);
 }
 
-/* Dark mode, always — with a softer palette than mandoc.css ships.
- *
- * mandoc.css only flips `--bg`/`--fg` to #1E1F21/#EEEFF1 inside
- * `@media (prefers-color-scheme: dark)`, and near-white on near-black is
- * the worst case for long serif runs: Times New Roman hairlines bloom and
- * the text glares.  The foreground is therefore a muted warm grey (~9:1
- * contrast instead of ~17:1) and the links are desaturated instead of the
- * pastel #BAD7FF/#F6BAFF.  `:root` outranks the bare `html` selector
- * mandoc uses, so this wins in both schemes; the link colours have to be
- * restated because that media block recolours them too. */
 :root {
-    color-scheme: dark;
-    --bg: #1E1F21;
-    --fg: #C5C8C6;
+    color-scheme: light;
+    --bg: #F5F5F5;
+    --fg: #17191A;
+    --muted: #5F5F57;
+    --rule: #C6BFB0;
 }
 
-:link { color: #81A2BE; }
-:visited { color: #B294BB; }
+:link {
+    color: #1A5E86;
+}
+
+/* 6.4:1 */
+:visited {
+    color: #5A4CA8;
+}
+
+/* 6.3:1 */
+
+
+h1.Sh {
+    font-size: 110%;
+    font-weight: 700;
+}
+
+h2.Ss {
+    font-size: 100%;
+    font-weight: 600;
+}
+
+.Sh>a.permalink,
+.Ss>a.permalink {
+    color: var(--fg);
+}
+
+div[role=doc-pageheader] {
+    border-bottom-color: var(--rule);
+}
+
+div[role=doc-pagefooter] {
+    border-top-color: var(--rule);
+}
 
 body {
     display: flex;
@@ -66,13 +90,14 @@ body {
 
 .sidebar-title {
     display: block;
-    border-bottom: 1px dotted #808080;
+    border-bottom: 1px dotted var(--rule);
     margin-bottom: 0.25em;
     font-size: 110%;
     font-weight: 700;
 }
+
 .sidebar-subtitle {
-    color: #8A8A8A;
+    color: var(--muted);
     font-size: 90%;
     margin-bottom: 1em;
 }
@@ -114,22 +139,27 @@ pre {
     margin: 0;
     padding: 0;
 }
-.side-tree,
+
+#F5F5F5 .side-tree,
 .side-tree ul {
     list-style: none;
     margin: 0;
     padding-left: 0;
 }
+
 .side-tree ul {
     margin-left: 0.8em;
 }
+
 .side-tree summary {
     cursor: pointer;
     user-select: none;
 }
+
 .side-tree summary::marker {
-    color: #8A8A8A;
+    color: var(--muted);
 }
+
 .side-tree .dir {
     margin-top: 0.3em;
 }
@@ -138,10 +168,21 @@ pre {
     margin-top: 0.3em;
 }
 
-.side-nav .d1 { margin-left: 0.5em; }
-.side-nav .d2 { margin-left: 1em; }
-.side-nav .d3 { margin-left: 1.5em; }
-.side-nav .d4 { margin-left: 2em; }
+.side-nav .d1 {
+    margin-left: 0.5em;
+}
+
+.side-nav .d2 {
+    margin-left: 1em;
+}
+
+.side-nav .d3 {
+    margin-left: 1.5em;
+}
+
+.side-nav .d4 {
+    margin-left: 2em;
+}
 
 .side-nav a {
     text-decoration: none;
@@ -155,13 +196,15 @@ pre {
 .sidebar-powered {
     margin-top: 1.25em;
     padding-top: 0.75em;
-    border-top: 1px dotted #808080;
-    color: #8A8A8A;
+    border-top: 1px dotted var(--rule);
+    color: var(--muted);
     font-size: 90%;
 }
 
 @media (max-width: 900px) {
-    body, .layout {
+
+    body,
+    .layout {
         flex-direction: column;
     }
 
@@ -169,9 +212,6 @@ pre {
     .content {
         flex: 0 0 auto;
         width: 100%;
-        /* `.content` keeps its 20px side padding, so content-box sizing
-           would make it 40px wider than the viewport and clip every line
-           at the right edge. */
         box-sizing: border-box;
     }
 
